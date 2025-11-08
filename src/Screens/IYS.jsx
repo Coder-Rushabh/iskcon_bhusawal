@@ -18,14 +18,14 @@ import groupService from "../assets/gaur.jpg";
 import devotional from "../assets/gaur.jpg";
 
 const contactBoys = {
-  leader: "IYS Boys Coordinator – Shri. Ramesh",
-  phone: "+91-77670-43798",
+  leader: "IYS Boys Coordinator – Shriman. Jitendra Kumar",
+  phone: "+91-90112-19587",
   email: "boys.iys.bhusawal@iskcon.org",
 };
 
 const contactGirls = {
-  leader: "IYS Girls Coordinator – Smt. Radha",
-  phone: "+91-77458-96220",
+  leader: "IYS Girls Coordinator – Dr. Rekha Patil",
+  phone: "+91-80077-22277",
   email: "girls.iys.bhusawal@iskcon.org",
 };
 
@@ -33,8 +33,8 @@ const templeContact = {
   name: "Sri Sri Radha Murlidhar Mandir, ISKCON Bhusawal",
   address:
     "Near Roop Darshan Photo Studio, Ram Mandir Ward, Bhusawal, Maharashtra 425201",
-  phoneMain: "+91-77670-43798, +91-77458-96220",
-  emailMain: "iskcon.bhusawal@gmail.com",
+  phoneMain: "+91-77670-43798, +91-90112-19587",
+  emailMain: "infoiskcon.bhusawal@gmail.com",
 };
 
 function RegisterModal({ open, onClose, defaultFor }) {
@@ -194,7 +194,7 @@ export default function IYSDetailPage() {
 
               <div className="mt-6 flex flex-wrap gap-3">
                 <button
-                  onClick={() => setModal({ open: true, forProgram: "Boys Program" })}
+                  // onClick={() => setModal({ open: true, forProgram: "Boys Program" })}
                   className="px-5 py-3 rounded-lg bg-white/90 border hover:shadow-md flex items-center gap-3"
                 >
                   <FaRegCalendarCheck className="text-indigo-700" />
@@ -202,7 +202,7 @@ export default function IYSDetailPage() {
                 </button>
 
                 <button
-                  onClick={() => setModal({ open: true, forProgram: "Girls Program" })}
+                  // onClick={() => setModal({ open: true, forProgram: "Girls Program" })}
                   className="px-5 py-3 rounded-lg bg-amber-600 hover:bg-amber-700 text-white flex items-center gap-3"
                   style={{ backgroundColor: saffron }}
                 >
@@ -312,7 +312,7 @@ export default function IYSDetailPage() {
 
               <div className="flex flex-wrap gap-3 mt-4">
                 <button
-                  onClick={() => setModal({ open: true, forProgram: "Boys Program" })}
+                  // onClick={() => setModal({ open: true, forProgram: "Boys Program" })}
                   className="px-4 py-2 rounded-lg bg-indigo-800 text-white hover:opacity-95"
                 >
                   Register (Boys)
@@ -325,12 +325,12 @@ export default function IYSDetailPage() {
                   <FaPhoneAlt className="text-indigo-700" /> {contactBoys.phone}
                 </a>
 
-                <a
+                {/* <a
                   href={`mailto:${contactBoys.email}`}
                   className="px-4 py-2 rounded-lg border hover:bg-gray-50 flex items-center gap-2"
                 >
                   <FaEnvelope className="text-indigo-700" /> {contactBoys.email}
-                </a>
+                </a> */}
               </div>
             </div>
           </article>
@@ -373,7 +373,7 @@ export default function IYSDetailPage() {
 
               <div className="flex flex-wrap gap-3 mt-4">
                 <button
-                  onClick={() => setModal({ open: true, forProgram: "Girls Program" })}
+                  // onClick={() => setModal({ open: true, forProgram: "Girls Program" })}
                   className="px-4 py-2 rounded-lg"
                   style={{ backgroundColor: saffron, color: "white" }}
                 >
@@ -387,19 +387,19 @@ export default function IYSDetailPage() {
                   <FaPhoneAlt className="text-amber-700" /> {contactGirls.phone}
                 </a>
 
-                <a
+                {/* <a
                   href={`mailto:${contactGirls.email}`}
                   className="px-4 py-2 rounded-lg border hover:bg-gray-50 flex items-center gap-2"
                 >
                   <FaEnvelope className="text-amber-700" /> {contactGirls.email}
-                </a>
+                </a> */}
               </div>
             </div>
           </article>
         </section>
 
         {/* Upcoming Events & Timeline */}
-        <section className="mb-12">
+        {/* <section className="mb-12">
           <h3 className="text-3xl font-serif text-indigo-900 mb-6">Upcoming Events & Camps</h3>
 
           <div className="space-y-6">
@@ -457,11 +457,11 @@ export default function IYSDetailPage() {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* Weekly Schedule & Features */}
-        <section className="mb-12">
-          <h3 className="text-3xl font-serif text-indigo-900 mb-6">Weekly Schedule (Sample)</h3>
+        {/* <section className="mb-12">
+          <h3 className="text-3xl font-serif text-indigo-900 mb-6">Weekly Schedule </h3>
           <div className="bg-white rounded-2xl border overflow-hidden">
             <table className="w-full text-left">
               <thead className="bg-indigo-50">
@@ -494,10 +494,10 @@ export default function IYSDetailPage() {
               </tbody>
             </table>
           </div>
-        </section>
+        </section> */}
 
         {/* Gallery */}
-        <section className="mb-12">
+        {/* <section className="mb-12">
           <h3 className="text-3xl font-serif text-indigo-900 mb-6">Gallery & Moments</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[groupService, boysCamp, girlsFestival, devotional].map((src, i) => (
@@ -509,7 +509,7 @@ export default function IYSDetailPage() {
               </div>
             ))}
           </div>
-        </section>
+        </section> */}
 
         {/* Testimonials */}
         <section className="mb-12">
@@ -612,7 +612,7 @@ export default function IYSDetailPage() {
               <FaWhatsapp /> WhatsApp
             </a>
 
-            <a
+            {/* <a
               href="#register"
               onClick={(e) => {
                 e.preventDefault();
@@ -621,7 +621,7 @@ export default function IYSDetailPage() {
               className="px-4 py-2 rounded-lg border hover:bg-gray-50"
             >
               Register / Volunteer
-            </a>
+            </a> */}
           </div>
         </footer>
       </main>

@@ -95,7 +95,7 @@ const WeeklyPrograms = () => (
 
 const App = () => (
   <div>
-    <DarshanGallery />
+    {/* <DarshanGallery /> */}
     <WeeklyPrograms />
   </div>
 );

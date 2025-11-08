@@ -97,9 +97,8 @@ const Header = () => {
                 >
                   About
                   <svg
-                    className={`w-4 h-4 transform transition-transform ${
-                      isDropdownOpen ? "rotate-180" : ""
-                    }`}
+                    className={`w-4 h-4 transform transition-transform ${isDropdownOpen ? "rotate-180" : ""
+                      }`}
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="2"
@@ -148,12 +147,17 @@ const Header = () => {
               >
                 Weekly Programs
               </Link>
-              <Link to="/activities" className={isActive("/activities")}>
+              {/* <Link to="/activities" className={isActive("/activities")}>
                 Activities
-              </Link>
+              </Link> */}
               <Link to="/contact" className={isActive("/contact")}>
                 Contact
               </Link>
+              <div className="bg-[#d1a664] p-2 rounded-lg"><Link to="/donation" className={isActive("/contact")}>
+                Donation
+              </Link>
+              </div>
+
             </div>
           </div>
 
@@ -217,19 +221,26 @@ const Header = () => {
               >
                 Weekly Programs
               </Link>
-              <Link
+              {/* <Link
                 to="/activities"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`block py-2 ${isActive("/activities")}`}
               >
                 Activities
-              </Link>
+              </Link> */}
               <Link
                 to="/contact"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`block py-2 ${isActive("/contact")}`}
               >
                 Contact
+              </Link>
+
+              <Link to="/donation"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`block py-2 ${isActive("/donation")}`}
+              >
+                Donation
               </Link>
             </div>
           )}

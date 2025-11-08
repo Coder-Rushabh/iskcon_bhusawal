@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import img1 from '../assets/img.jpg'; // Update this path to your local image
-import img2 from '../assets/mandir.jpg'; // Update this path to your local image
+import img2 from '../assets/Mandir.jpg'; // Update this path to your local image
 
 function Carousel() {
     const [currentSlide, setCurrentSlide] = useState(0);

@@ -1,5 +1,5 @@
 import React from 'react';
-import img2 from '../assets/mandir.jpg'; // Update this path to your local image
+import img2 from '../assets/Mandir.jpg'; // Update this path to your local image
 
 function TempleIntro() {
     return (

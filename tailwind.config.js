@@ -9,6 +9,18 @@ export default {
   theme: {
     extend: {
       colors: {
+        khaki: {
+          50: '#faf8f4',
+          100: '#f4f0e6',
+          200: '#e8dfcc',
+          300: '#dccdb3',
+          400: '#d0bc99',
+          500: '#c4ab80',
+          600: '#b89a66',
+          700: '#9c7e4d',
+          800: '#806533',
+          900: '#644c1a',
+        },
         primary: {
           "50": "#eff6ff",
           "100": "#dbeafe",
