@@ -1,5 +1,4 @@
-// IYSDetailPage.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   FaPhoneAlt,
   FaEnvelope,
@@ -9,144 +8,118 @@ import {
   FaRegClock,
   FaRegCalendarCheck,
   FaWhatsapp,
+  FaQuoteLeft,
 } from "react-icons/fa";
+import gaur from "../assets/gaur.jpg";
 
-// Replace these image imports with your own images
-import boysCamp from "../assets/gaur.jpg";
-import girlsFestival from "../assets/gaur.jpg";
-import groupService from "../assets/gaur.jpg";
-import devotional from "../assets/gaur.jpg";
-
-const contactBoys = {
-  leader: "IYS Boys Coordinator – Shriman. Jitendra Kumar",
-  phone: "+91-90112-19587",
-  email: "boys.iys.bhusawal@iskcon.org",
+// Contact Details
+const contactDetails = {
+  temple: "ISKCON Bhusawal",
+  phone: "+91-77670-43798",
+  email: "infoiskcon.bhusawal@gmail.com",
+  whatsapp: "+919011219587",
+  address: "Near Roop Darshan Photo Studio, Ram Mandir Ward, Bhusawal, Maharashtra 425201"
 };
 
-const contactGirls = {
-  leader: "IYS Girls Coordinator – Dr. Rekha Patil",
-  phone: "+91-80077-22277",
-  email: "girls.iys.bhusawal@iskcon.org",
+// Speaker Details
+const speaker = {
+  name: "HG Jagannath Bandhu Prabhuji",
+  bio: "HG Jagannath Bandhu Prabhuji is a dedicated spiritual mentor and visionary leader at ISKCON Bhusawal. With years of experience in guiding youth, he specializes in presenting ancient Vedic wisdom in a contemporary and practical manner. He is deeply committed to helping young men develop strong character, find inner peace, and lead a life rooted in Krishna consciousness.",
+  image: gaur // Using placeholder
 };
 
-const templeContact = {
-  name: "Sri Sri Radha Murlidhar Mandir, ISKCON Bhusawal",
-  address:
-    "Near Roop Darshan Photo Studio, Ram Mandir Ward, Bhusawal, Maharashtra 425201",
-  phoneMain: "+91-77670-43798, +91-90112-19587",
-  emailMain: "infoiskcon.bhusawal@gmail.com",
-};
+// Activities
+const activities = [
+  {
+    title: "Spiritual Lectures",
+    description: "Deep insights into the Bhagavad-gita and Srimad Bhagavatam, offering practical solutions to modern life challenges through Vedic wisdom.",
+    icon: <FaUserFriends className="text-3xl" />
+  },
+  {
+    title: "Kirtan",
+    description: "Soul-stirring devotional chanting that connects the heart with the divine, bringing peace and spiritual ecstasy.",
+    icon: <FaQuoteLeft className="text-3xl" />
+  },
+  {
+    title: "Prasadam",
+    description: "Wholesome and sanctified vegetarian food (Krishna Prasadam) distributed to all participants, nourishing both body and soul.",
+    icon: <FaRegCalendarCheck className="text-3xl" />
+  }
+];
 
-function RegisterModal({ open, onClose, defaultFor }) {
+// Placeholder Images for Gallery
+const galleryImages = [
+  { url: gaur, caption: "Spiritual Discourse" },
+  { url: gaur, caption: "Ecstatic Kirtan" },
+  { url: gaur, caption: "Prasadam Distribution" },
+  { url: gaur, caption: "Youth Mentorship" }
+];
+
+function RegisterModal({ open, onClose }) {
   const [form, setForm] = useState({
     name: "",
     age: "",
     phone: "",
     email: "",
-    forProgram: defaultFor || "",
     notes: "",
   });
 
-  function handleChange(e) {
-    setForm((s) => ({ ...s, [e.target.name]: e.target.value }));
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    // Replace below with actual submit logic (API / firebase / email)
-    alert(
-      `Thanks ${form.name}! Registration for ${form.forProgram} received. Coordinator will contact you at ${form.phone}`
-    );
-    onClose();
-  }
-
   if (!open) return null;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert(`Thank you ${form.name}! Your registration for IYS Boys Meetup has been received.`);
+    onClose();
+  };
+
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/50 p-4">
-      <div className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl overflow-hidden">
-        <div className="flex items-center justify-between px-6 py-4 border-b">
-          <h3 className="text-xl font-semibold">IYS Registration</h3>
-          <button
-            className="text-gray-600 hover:text-gray-900"
-            onClick={onClose}
-            aria-label="Close"
-          >
-            ✕
-          </button>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+      <div className="w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden transition-all transform duration-300">
+        <div className="bg-amber-600 px-6 py-4 flex items-center justify-between text-white">
+          <h3 className="text-xl font-bold">IYS Registration</h3>
+          <button onClick={onClose} className="text-2xl hover:text-amber-200 transition">✕</button>
         </div>
-
-        <form onSubmit={handleSubmit} className="px-6 py-6 space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input
-              name="name"
-              value={form.name}
-              onChange={handleChange}
-              required
-              placeholder="Full name"
-              className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-saffron"
-            />
-            <input
-              name="age"
-              value={form.age}
-              onChange={handleChange}
-              placeholder="Age"
-              className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-saffron"
-            />
-            <input
-              name="phone"
-              value={form.phone}
-              onChange={handleChange}
-              required
-              placeholder="Phone (e.g. +91-...)"
-              className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-saffron"
-            />
-            <input
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-              placeholder="Email (optional)"
-              className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-saffron"
-            />
-          </div>
-
-          <select
-            name="forProgram"
-            value={form.forProgram}
-            onChange={handleChange}
-            className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-saffron"
+        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+          <input
+            type="text"
+            placeholder="Full Name"
             required
-          >
-            <option value="">Select program</option>
-            <option value="Boys Program">Boys Program</option>
-            <option value="Girls Program">Girls Program</option>
-            <option value="Both / Volunteer">Both / Volunteer</option>
-          </select>
-
-          <textarea
-            name="notes"
-            value={form.notes}
-            onChange={handleChange}
-            placeholder="Any notes / preferences"
-            className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-saffron"
-            rows={3}
+            className="w-full border-2 border-gray-100 rounded-xl px-4 py-3 focus:border-amber-500 focus:outline-none transition"
+            onChange={(e) => setForm({...form, name: e.target.value})}
           />
-
-          <div className="flex items-center justify-end gap-3">
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-4 py-2 rounded-lg border hover:bg-gray-50"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="px-5 py-2 rounded-lg bg-saffron-600 hover:bg-saffron-700 text-white font-medium"
-              style={{ backgroundColor: "#ef6c00" }}
-            >
-              Submit Registration
-            </button>
+          <div className="grid grid-cols-2 gap-4">
+            <input
+              type="number"
+              placeholder="Age"
+              className="w-full border-2 border-gray-100 rounded-xl px-4 py-3 focus:border-amber-500 focus:outline-none transition"
+              onChange={(e) => setForm({...form, age: e.target.value})}
+            />
+            <input
+              type="tel"
+              placeholder="Phone Number"
+              required
+              className="w-full border-2 border-gray-100 rounded-xl px-4 py-3 focus:border-amber-500 focus:outline-none transition"
+              onChange={(e) => setForm({...form, phone: e.target.value})}
+            />
           </div>
+          <input
+            type="email"
+            placeholder="Email Address"
+            className="w-full border-2 border-gray-100 rounded-xl px-4 py-3 focus:border-amber-500 focus:outline-none transition"
+            onChange={(e) => setForm({...form, email: e.target.value})}
+          />
+          <textarea
+            placeholder="Additional Notes"
+            rows="3"
+            className="w-full border-2 border-gray-100 rounded-xl px-4 py-3 focus:border-amber-500 focus:outline-none transition"
+            onChange={(e) => setForm({...form, notes: e.target.value})}
+          ></textarea>
+          <button
+            type="submit"
+            className="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 rounded-xl shadow-lg transform hover:scale-[1.02] transition-all"
+          >
+            Confirm Registration
+          </button>
         </form>
       </div>
     </div>
@@ -154,482 +127,242 @@ function RegisterModal({ open, onClose, defaultFor }) {
 }
 
 export default function IYSDetailPage() {
-  const [modal, setModal] = useState({ open: false, forProgram: "" });
-  const [faqOpen, setFaqOpen] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  function toggleFaq(i) {
-    setFaqOpen((s) => ({ ...s, [i]: !s[i] }));
-  }
-
-  // decorative saffron color variable
-  const saffron = "#ef6c00";
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
-    <div className="min-h-screen bg-fixed bg-gradient-to-b from-amber-50 via-white to-amber-50 pb-20">
-      {/* Decorative top wave + motif */}
-      <div className="relative overflow-hidden">
-        <div
-          className="absolute inset-0"
-          aria-hidden
-          style={{
-            background:
-              "radial-gradient(circle at 10% 10%, rgba(239,108,0,0.06), transparent 10%), radial-gradient(circle at 90% 90%, rgba(63,81,181,0.04), transparent 10%)",
-          }}
-        />
-        <header className="max-w-6xl mx-auto px-6 py-12 relative z-10">
-          <div className="flex flex-col md:flex-row items-center gap-6">
-            <div className="flex-1">
-              <h1 className="text-5xl md:text-6xl font-serif text-indigo-900 leading-tight">
-                ISKCON Youth Services
-                <span className="block text-2xl mt-2 font-medium text-amber-700">
-                  Bhusawal — Ignite Spirituality • Lead with Values
-                </span>
-              </h1>
-
-              <p className="mt-6 text-gray-700 max-w-xl">
-                A culturally rooted & modern program for young hearts — combining Vedic wisdom,
-                creative arts, leadership training, and seva. Separate guided programs for boys and
-                girls, plus shared festivals and mentorship.
-              </p>
-
-              <div className="mt-6 flex flex-wrap gap-3">
-                <button
-                  // onClick={() => setModal({ open: true, forProgram: "Boys Program" })}
-                  className="px-5 py-3 rounded-lg bg-white/90 border hover:shadow-md flex items-center gap-3"
-                >
-                  <FaRegCalendarCheck className="text-indigo-700" />
-                  <span className="text-indigo-800 font-medium">Register (Boys)</span>
-                </button>
-
-                <button
-                  // onClick={() => setModal({ open: true, forProgram: "Girls Program" })}
-                  className="px-5 py-3 rounded-lg bg-amber-600 hover:bg-amber-700 text-white flex items-center gap-3"
-                  style={{ backgroundColor: saffron }}
-                >
-                  <FaRegCalendarCheck />
-                  <span className="font-medium">Register (Girls)</span>
-                </button>
-
-                <a
-                  href={`mailto:${templeContact.emailMain}?subject=IYS%20Query`}
-                  className="px-4 py-3 rounded-lg border hover:bg-gray-50 flex items-center gap-2"
-                >
-                  <FaEnvelope className="text-gray-700" />
-                  <span className="text-gray-800">Contact Temple</span>
-                </a>
-              </div>
-            </div>
-
-            <div className="w-full md:w-1/3 rounded-xl overflow-hidden shadow-xl">
-              <img
-                src={devotional}
-                alt="IYS devotional"
-                className="w-full h-60 object-cover"
-                style={{ display: devotional ? "block" : "none" }}
-              />
-            </div>
-          </div>
-        </header>
-
-        {/* Decorative SVG divider */}
-        <svg
-          className="w-full -mt-6"
-          viewBox="0 0 1440 80"
-          preserveAspectRatio="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M0,40 C200,120 400,0 720,40 C1040,80 1240,10 1440,40 L1440 0 L0 0 Z"
-            fill="#fff"
+    <div className="min-h-screen bg-amber-50/30 text-gray-800 font-sans">
+      {/* Hero Section */}
+      <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img 
+            src={gaur} 
+            alt="Hero Background" 
+            className="w-full h-full object-cover filter brightness-[0.3]"
           />
-        </svg>
-      </div>
-
-      <main className="max-w-6xl mx-auto px-6 -mt-10 relative z-20">
-        {/* Temple Card */}
-        <div className="bg-white border rounded-2xl shadow-xl p-6 flex flex-col md:flex-row items-center gap-6 mb-10">
-          <div className="flex items-center gap-4">
-            <FaMapMarkerAlt className="text-4xl text-indigo-800" />
-            <div>
-              <h3 className="text-lg font-semibold text-indigo-900">{templeContact.name}</h3>
-              <p className="text-gray-700">{templeContact.address}</p>
-            </div>
-          </div>
-
-          <div className="ml-auto flex items-center gap-6">
-            <div className="flex items-center gap-2">
-              <FaPhoneAlt className="text-indigo-700" />
-              <a href={`tel:${templeContact.phoneMain}`} className="text-gray-800">
-                {templeContact.phoneMain}
-              </a>
-            </div>
-            <div className="flex items-center gap-2">
-              <FaEnvelope className="text-indigo-700" />
-              <a href={`mailto:${templeContact.emailMain}`} className="text-gray-800">
-                {templeContact.emailMain}
-              </a>
-            </div>
-          </div>
         </div>
+        <div className="relative z-10 text-center px-6 max-w-4xl animate-in slide-in-from-bottom duration-1000">
+          <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-6">
+            Friday Youth Boys Meetup – <span className="text-amber-500">IYS Bhusawal</span>
+          </h1>
+          <p className="text-lg md:text-xl text-gray-200 mb-8 leading-relaxed">
+            Empowering the next generation with Vedic wisdom, discipline, and spiritual strength.
+          </p>
+          <button 
+            onClick={() => setIsModalOpen(true)}
+            className="bg-amber-600 hover:bg-amber-700 text-white px-8 py-4 rounded-full font-bold text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all"
+          >
+            Join the Program
+          </button>
+        </div>
+      </section>
 
-        {/* Two-column Programs */}
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-          {/* Boys Card */}
-          <article className="bg-white rounded-2xl shadow-lg overflow-hidden border-t-4 border-indigo-800">
-            <div className="relative">
-              <img
-                src={boysCamp}
-                alt="Boys Camp"
-                className="w-full h-56 object-cover"
-              />
-              <div className="absolute top-4 left-4 bg-indigo-900/80 text-white px-3 py-2 rounded-lg">
-                <div className="text-sm">Program</div>
-                <div className="text-lg font-semibold">Boys — Leadership & Seva</div>
-              </div>
-            </div>
-
-            <div className="p-6 space-y-4">
-              <h4 className="text-2xl font-serif text-indigo-900">For Young Boys</h4>
-              <p className="text-gray-700">
-                A guided program (ages ~13–30) blending scriptural study, outdoor retreats,
-                leadership training, kirtan & seva. Build inner strength while serving society.
-              </p>
-
-              <ul className="grid grid-cols-1 gap-2 text-gray-700">
-                <li className="flex items-start gap-3">
-                  <FaUserFriends className="mt-1 text-indigo-700" />
-                  <span><strong>Weekly sessions:</strong> Bhagavad-Gita study, kirtan & discussion.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <FaRegClock className="mt-1 text-indigo-700" />
-                  <span><strong>Practical skills:</strong> public speaking, confidence, time management.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <FaCalendarAlt className="mt-1 text-indigo-700" />
-                  <span><strong>Camps & pilgrimages:</strong> seasonal camps and guided tours.</span>
-                </li>
-              </ul>
-
-              <div className="flex flex-wrap gap-3 mt-4">
-                <button
-                  // onClick={() => setModal({ open: true, forProgram: "Boys Program" })}
-                  className="px-4 py-2 rounded-lg bg-indigo-800 text-white hover:opacity-95"
-                >
-                  Register (Boys)
-                </button>
-
-                <a
-                  href={`tel:${contactBoys.phone}`}
-                  className="px-4 py-2 rounded-lg border hover:bg-gray-50 flex items-center gap-2"
-                >
-                  <FaPhoneAlt className="text-indigo-700" /> {contactBoys.phone}
-                </a>
-
-                {/* <a
-                  href={`mailto:${contactBoys.email}`}
-                  className="px-4 py-2 rounded-lg border hover:bg-gray-50 flex items-center gap-2"
-                >
-                  <FaEnvelope className="text-indigo-700" /> {contactBoys.email}
-                </a> */}
-              </div>
-            </div>
-          </article>
-
-          {/* Girls Card */}
-          <article className="bg-white rounded-2xl shadow-lg overflow-hidden border-t-4 border-amber-600">
-            <div className="relative">
-              <img
-                src={girlsFestival}
-                alt="Girls Festival"
-                className="w-full h-56 object-cover"
-              />
-              <div className="absolute top-4 left-4 bg-amber-700/90 text-white px-3 py-2 rounded-lg">
-                <div className="text-sm">Program</div>
-                <div className="text-lg font-semibold">Girls — Empowerment & Arts</div>
-              </div>
-            </div>
-
-            <div className="p-6 space-y-4">
-              <h4 className="text-2xl font-serif text-amber-800">For Young Girls</h4>
-              <p className="text-gray-700">
-                Nurturing confidence, creativity, and spiritual practice for young women through
-                devotional arts, life-skills workshops, and community service.
-              </p>
-
-              <ul className="grid grid-cols-1 gap-2 text-gray-700">
-                <li className="flex items-start gap-3">
-                  <FaUserFriends className="mt-1" style={{ color: saffron }} />
-                  <span><strong>Weekly sessions:</strong> devotional practice, art & music classes.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <FaRegClock className="mt-1" style={{ color: saffron }} />
-                  <span><strong>Workshops:</strong> self-care, emotional health, leadership.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <FaCalendarAlt className="mt-1" style={{ color: saffron }} />
-                  <span><strong>Cultural events:</strong> dance, drama, and festival performances.</span>
-                </li>
-              </ul>
-
-              <div className="flex flex-wrap gap-3 mt-4">
-                <button
-                  // onClick={() => setModal({ open: true, forProgram: "Girls Program" })}
-                  className="px-4 py-2 rounded-lg"
-                  style={{ backgroundColor: saffron, color: "white" }}
-                >
-                  Register (Girls)
-                </button>
-
-                <a
-                  href={`tel:${contactGirls.phone}`}
-                  className="px-4 py-2 rounded-lg border hover:bg-gray-50 flex items-center gap-2"
-                >
-                  <FaPhoneAlt className="text-amber-700" /> {contactGirls.phone}
-                </a>
-
-                {/* <a
-                  href={`mailto:${contactGirls.email}`}
-                  className="px-4 py-2 rounded-lg border hover:bg-gray-50 flex items-center gap-2"
-                >
-                  <FaEnvelope className="text-amber-700" /> {contactGirls.email}
-                </a> */}
-              </div>
-            </div>
-          </article>
-        </section>
-
-        {/* Upcoming Events & Timeline */}
-        {/* <section className="mb-12">
-          <h3 className="text-3xl font-serif text-indigo-900 mb-6">Upcoming Events & Camps</h3>
-
+      <main className="max-w-7xl mx-auto px-6 py-16">
+        {/* Description Section */}
+        <section className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-24">
           <div className="space-y-6">
-            <div className="bg-white rounded-2xl border p-6 shadow-sm flex flex-col md:flex-row gap-4">
-              <div className="w-full md:w-1/4 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-indigo-900">15–17 Nov</div>
-                  <div className="text-sm text-gray-600">Youth Leadership Camp</div>
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-gray-900">
+              Ignite Your <span className="text-amber-600">Spiritual Journey</span>
+            </h2>
+            <div className="w-20 h-1 bg-amber-600 rounded-full"></div>
+            <p className="text-gray-700 text-lg leading-relaxed">
+              ISKCON Youth Services (IYS) Bhusawal is a dedicated platform for unmarried male youth to explore the profound depth of Krishna consciousness. Our program is designed to provide a holistic approach to self-development, blending ancient spiritual practices with practical life skills.
+            </p>
+            <p className="text-gray-700 text-lg leading-relaxed">
+              Through engaging sessions focused on spirituality, discipline, and character building, we help young men navigate the complexities of modern life with a calm mind and a purposeful heart.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+              <div className="flex items-center gap-3 bg-white p-4 rounded-xl shadow-sm border border-amber-100">
+                <FaCalendarAlt className="text-amber-600 text-xl" />
+                <div>
+                  <p className="text-sm text-gray-500">Frequency</p>
+                  <p className="font-bold">Every Friday</p>
                 </div>
               </div>
-              <div className="flex-1">
-                <h4 className="text-xl font-semibold">Prerna Leadership Retreat</h4>
-                <p className="text-gray-700 mt-2">
-                  A three-day residential camp focused on leadership, group dynamics, seva training,
-                  and spiritual introspection with guided workshops & kirtan.
-                </p>
-                <div className="mt-4 flex gap-3">
-                  <button
-                    onClick={() => setModal({ open: true, forProgram: "Prerna Retreat" })}
-                    className="px-4 py-2 rounded-lg bg-indigo-800 text-white"
-                  >
-                    Register
-                  </button>
-                  <a
-                    className="px-4 py-2 border rounded-lg"
-                    href={`mailto:${templeContact.emailMain}?subject=Prerna%20Retreat%20Registration`}
-                  >
-                    Email Coordinator
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-2xl border p-6 shadow-sm flex flex-col md:flex-row gap-4">
-              <div className="w-full md:w-1/4 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-amber-700">26 Dec</div>
-                  <div className="text-sm text-gray-600">Chetana Festival</div>
-                </div>
-              </div>
-              <div className="flex-1">
-                <h4 className="text-xl font-semibold">Cultural & Devotional Festival</h4>
-                <p className="text-gray-700 mt-2">
-                  Performances, competitions in music & arts, devotional dramas, and community
-                  feasts — a celebration of youthful creativity and devotion.
-                </p>
-                <div className="mt-4 flex gap-3">
-                  <a
-                    className="px-4 py-2 border rounded-lg"
-                    href={`mailto:${templeContact.emailMain}?subject=Chetana%20Festival%20Query`}
-                  >
-                    Event Details
-                  </a>
+              <div className="flex items-center gap-3 bg-white p-4 rounded-xl shadow-sm border border-amber-100">
+                <FaUserFriends className="text-amber-600 text-xl" />
+                <div>
+                  <p className="text-sm text-gray-500">Target Audience</p>
+                  <p className="font-bold">Unmarried Male Youth</p>
                 </div>
               </div>
             </div>
           </div>
-        </section> */}
-
-        {/* Weekly Schedule & Features */}
-        {/* <section className="mb-12">
-          <h3 className="text-3xl font-serif text-indigo-900 mb-6">Weekly Schedule </h3>
-          <div className="bg-white rounded-2xl border overflow-hidden">
-            <table className="w-full text-left">
-              <thead className="bg-indigo-50">
-                <tr>
-                  <th className="px-6 py-3">Day</th>
-                  <th className="px-6 py-3">Time</th>
-                  <th className="px-6 py-3">Activity</th>
-                  <th className="px-6 py-3">Venue</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="border-t">
-                  <td className="px-6 py-4">Saturday</td>
-                  <td className="px-6 py-4">5:30 PM – 7:00 PM</td>
-                  <td className="px-6 py-4">Bhagavad-Gita Class & Chanting</td>
-                  <td className="px-6 py-4">Temple Hall</td>
-                </tr>
-                <tr className="border-t">
-                  <td className="px-6 py-4">Sunday</td>
-                  <td className="px-6 py-4">10:00 AM – 12:00 PM</td>
-                  <td className="px-6 py-4">Kirtan, Arts & Service</td>
-                  <td className="px-6 py-4">Community Room</td>
-                </tr>
-                <tr className="border-t">
-                  <td className="px-6 py-4">Wednesday</td>
-                  <td className="px-6 py-4">6:00 PM – 7:30 PM</td>
-                  <td className="px-6 py-4">Life Skills Workshop / Debate</td>
-                  <td className="px-6 py-4">Study Hall</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section> */}
-
-        {/* Gallery */}
-        {/* <section className="mb-12">
-          <h3 className="text-3xl font-serif text-indigo-900 mb-6">Gallery & Moments</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {[groupService, boysCamp, girlsFestival, devotional].map((src, i) => (
-              <div
-                key={i}
-                className="rounded-xl overflow-hidden shadow-md transform hover:scale-105 transition"
-              >
-                <img src={src} alt={`gallery-${i}`} className="w-full h-44 object-cover" />
-              </div>
-            ))}
-          </div>
-        </section> */}
-
-        {/* Testimonials */}
-        <section className="mb-12">
-          <h3 className="text-3xl font-serif text-indigo-900 mb-6">Voices of Youth</h3>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <blockquote className="bg-white p-6 rounded-2xl border shadow-sm">
-              <p className="text-gray-800 italic">
-                "IYS changed how I see leadership — it's service first. Camps helped me find my calm."
-              </p>
-              <footer className="mt-4 text-sm text-gray-600">— Aditya, 21</footer>
-            </blockquote>
-
-            <blockquote className="bg-white p-6 rounded-2xl border shadow-sm">
-              <p className="text-gray-800 italic">
-                "The cultural programs helped me reconnect with our traditions while learning new
-                skills."{" "}
-              </p>
-              <footer className="mt-4 text-sm text-gray-600">— Meera, 19</footer>
-            </blockquote>
-
-            <blockquote className="bg-white p-6 rounded-2xl border shadow-sm">
-              <p className="text-gray-800 italic">
-                "Friendly mentors & a supportive community — great place to grow and serve."
-              </p>
-              <footer className="mt-4 text-sm text-gray-600">— Karan, 24</footer>
-            </blockquote>
+          <div className="relative">
+            <img 
+              src={gaur} 
+              alt="IYS Session" 
+              className="rounded-3xl shadow-2xl w-full h-[400px] object-cover"
+            />
+            <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-2xl shadow-xl border border-amber-50 hidden md:block">
+              <p className="text-amber-600 font-bold text-2xl">IYS</p>
+              <p className="text-gray-600 font-medium">Character • Devotion • Leadership</p>
+            </div>
           </div>
         </section>
 
-        {/* FAQ Accordion */}
-        <section className="mb-16">
-          <h3 className="text-3xl font-serif text-indigo-900 mb-6">Frequently Asked Questions</h3>
-
-          <div className="space-y-4">
-            {[
-              {
-                q: "What is the age group for IYS?",
-                a: "Typically youth between ~13 to 30 years. Subgroups & activities are age-appropriate.",
-              },
-              {
-                q: "Are sessions free?",
-                a: "Weekly sessions are generally free. Camps/retreats may have a small fee to cover logistics.",
-              },
-              {
-                q: "Can parents join or volunteer?",
-                a: "Yes — parents and volunteers are welcome to assist with events, seva and logistics.",
-              },
-              {
-                q: "What does registration require?",
-                a: "Basic contact details. For residential events, health information and consent (if minor).",
-              },
-            ].map((item, i) => (
-              <div
-                key={i}
-                className="bg-white rounded-xl border shadow-sm overflow-hidden"
+        {/* Program Details & Activities */}
+        <section className="mb-24">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-4">Program Activities</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">Experience a transformative blend of wisdom, music, and fellowship.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {activities.map((activity, index) => (
+              <div 
+                key={index} 
+                className="bg-white p-8 rounded-3xl shadow-lg border border-gray-50 hover:border-amber-200 hover:shadow-2xl transition-all group"
               >
-                <button
-                  onClick={() => toggleFaq(i)}
-                  className="w-full px-6 py-4 flex justify-between items-center"
-                >
-                  <span className="text-left">
-                    <strong className="text-gray-800">{item.q}</strong>
-                  </span>
-                  <span className="text-gray-500">{faqOpen[i] ? "−" : "+"}</span>
-                </button>
+                <div className="w-16 h-16 bg-amber-50 rounded-2xl flex items-center justify-center text-amber-600 mb-6 group-hover:bg-amber-600 group-hover:text-white transition-colors">
+                  {activity.icon}
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">{activity.title}</h3>
+                <p className="text-gray-600 leading-relaxed">{activity.description}</p>
+              </div>
+            ))}
+          </div>
+        </section>
 
-                {faqOpen[i] && (
-                  <div className="px-6 pb-4 text-gray-700 border-t">
-                    {item.a}
+        {/* Speaker Section */}
+        <section className="bg-gradient-to-br from-indigo-900 to-blue-900 rounded-[3rem] overflow-hidden shadow-2xl mb-24">
+          <div className="grid grid-cols-1 lg:grid-cols-2 items-center">
+            <div className="p-12 lg:p-20 text-white">
+              <span className="inline-block px-4 py-1 bg-amber-500 rounded-full text-xs font-bold tracking-widest uppercase mb-6">Our Mentor</span>
+              <h2 className="text-4xl font-serif font-bold mb-6">{speaker.name}</h2>
+              <p className="text-blue-100 text-lg leading-relaxed mb-8 italic">
+                "{speaker.bio}"
+              </p>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full border-2 border-amber-500 p-1">
+                  <div className="w-full h-full bg-amber-500 rounded-full"></div>
+                </div>
+                <div>
+                  <p className="font-bold">Spiritual Mentor</p>
+                  <p className="text-blue-200 text-sm">ISKCON Bhusawal</p>
+                </div>
+              </div>
+            </div>
+            <div className="h-full min-h-[400px]">
+              <img 
+                src={speaker.image} 
+                alt={speaker.name} 
+                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* Gallery Section */}
+        <section className="mb-24">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-4">Glimpses of IYS</h2>
+              <p className="text-gray-600">Moments of devotion, learning, and service.</p>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {galleryImages.map((img, index) => (
+              <div key={index} className="group relative overflow-hidden rounded-2xl shadow-md h-64">
+                <img 
+                  src={img.url} 
+                  alt={img.caption} 
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                  <p className="text-white font-medium">{img.caption}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Contact Section */}
+        <section className="bg-white rounded-[2.5rem] p-8 md:p-12 shadow-xl border border-amber-50">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div className="space-y-8">
+              <div>
+                <h2 className="text-3xl font-serif font-bold text-gray-900 mb-4">Connect with Us</h2>
+                <p className="text-gray-600">Have questions about the program? Reach out to our team.</p>
+              </div>
+              
+              <div className="space-y-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-amber-50 rounded-full flex items-center justify-center text-amber-600 flex-shrink-0">
+                    <FaMapMarkerAlt />
                   </div>
-                )}
+                  <div>
+                    <p className="font-bold text-gray-900">Address</p>
+                    <p className="text-gray-600">{contactDetails.address}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-amber-50 rounded-full flex items-center justify-center text-amber-600 flex-shrink-0">
+                    <FaPhoneAlt />
+                  </div>
+                  <div>
+                    <p className="font-bold text-gray-900">Phone & Email</p>
+                    <p className="text-gray-600">{contactDetails.phone}</p>
+                    <p className="text-gray-600">{contactDetails.email}</p>
+                  </div>
+                </div>
               </div>
-            ))}
+
+              <div className="flex flex-wrap gap-4">
+                <a 
+                  href={`https://wa.me/${contactDetails.whatsapp.replace('+', '')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-3 shadow-lg transition-all transform hover:scale-105"
+                >
+                  <FaWhatsapp className="text-2xl" /> WhatsApp Us
+                </a>
+                <button 
+                  onClick={() => setIsModalOpen(true)}
+                  className="bg-amber-600 hover:bg-amber-700 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-3 shadow-lg transition-all transform hover:scale-105"
+                >
+                  <FaRegCalendarCheck className="text-2xl" /> Register Now
+                </button>
+              </div>
+            </div>
+            
+            <div className="bg-amber-50 rounded-[2rem] p-8 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-amber-100 rounded-bl-full opacity-50"></div>
+              <div className="relative z-10">
+                <h3 className="text-2xl font-bold text-amber-800 mb-6">Program Schedule</h3>
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center border-b border-amber-200 pb-3">
+                    <span className="font-medium text-amber-900">Day</span>
+                    <span className="font-bold text-amber-700">Every Friday</span>
+                  </div>
+                  <div className="flex justify-between items-center border-b border-amber-200 pb-3">
+                    <span className="font-medium text-amber-900">Time</span>
+                    <span className="font-bold text-amber-700">7:30 PM - 9:00 PM</span>
+                  </div>
+                  <div className="flex justify-between items-center border-b border-amber-200 pb-3">
+                    <span className="font-medium text-amber-900">Organizer</span>
+                    <span className="font-bold text-amber-700">ISKCON Youth Services</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="font-medium text-amber-900">Venue</span>
+                    <span className="font-bold text-amber-700">Temple Hall</span>
+                  </div>
+                </div>
+                <div className="mt-8 p-4 bg-white/50 rounded-xl border border-amber-200 italic text-amber-800 text-sm">
+                  "The youth are the future of society. By providing them with spiritual values, we are building a better world."
+                </div>
+              </div>
+            </div>
           </div>
         </section>
-
-        {/* Footer contact strip */}
-        <footer className="bg-white rounded-2xl border p-6 text-gray-700 flex flex-col md:flex-row items-center gap-4">
-          <div>
-            <h4 className="font-semibold text-indigo-900">Get in touch</h4>
-            <p>{templeContact.address}</p>
-            <p className="mt-2">
-              <FaPhoneAlt className="inline mr-2" />
-              <a href={`tel:${templeContact.phoneMain}`}>{templeContact.phoneMain}</a>
-            </p>
-            <p>
-              <FaEnvelope className="inline mr-2" />
-              <a href={`mailto:${templeContact.emailMain}`}>{templeContact.emailMain}</a>
-            </p>
-          </div>
-
-          <div className="ml-auto flex items-center gap-3">
-            <a
-              href={`https://wa.me/${contactBoys.phone.replace(/\D/g, "")}`}
-              target="_blank"
-              rel="noreferrer"
-              className="px-4 py-2 rounded-lg bg-green-600 text-white flex items-center gap-2"
-            >
-              <FaWhatsapp /> WhatsApp
-            </a>
-
-            {/* <a
-              href="#register"
-              onClick={(e) => {
-                e.preventDefault();
-                setModal({ open: true, forProgram: "Both / Volunteer" });
-              }}
-              className="px-4 py-2 rounded-lg border hover:bg-gray-50"
-            >
-              Register / Volunteer
-            </a> */}
-          </div>
-        </footer>
       </main>
 
-      <RegisterModal
-        open={modal.open}
-        onClose={() => setModal({ open: false, forProgram: "" })}
-        defaultFor={modal.forProgram}
+      <RegisterModal 
+        open={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
       />
     </div>
   );
