@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import img1 from '../assets/darshan/1.jpeg';
 import img2 from '../assets/darshan/2.jpeg';
 import img3 from '../assets/darshan/3.jpeg';
@@ -26,6 +27,7 @@ const programs = [
       'A special interactive session for students and young professionals focused on spirituality and self-growth.',
     time: '7:30 PM - 9:00 PM',
     image: gaur,
+    link: '/iys'
   },
   {
     day: 'Sunday',
@@ -76,18 +78,28 @@ const WeeklyPrograms = () => (
     <div className="max-w-7xl mx-auto px-6">
       <h2 className="text-4xl font-bold text-center text-gray-800 mb-12">Weekly Programs</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {programs.map((program, index) => (
-          <div key={index} className="bg-white shadow-xl rounded-lg overflow-hidden transform transition-all duration-300 hover:scale-105">
-            <img src={program.image} alt={program.title} className="w-full h-48 object-cover" />
-            <div className="p-6">
-              <h3 className="text-2xl font-semibold text-gray-800 mb-2">
-                {program.day} - {program.title}
-              </h3>
-              <p className="text-gray-600 text-lg">{program.description}</p>
-              <p className="text-gray-700 font-semibold mt-3">Time: {program.time}</p>
+        {programs.map((program, index) => {
+          const CardContent = (
+            <div className="bg-white shadow-xl rounded-lg overflow-hidden transform transition-all duration-300 hover:scale-105 h-full">
+              <img src={program.image} alt={program.title} className="w-full h-48 object-cover" />
+              <div className="p-6">
+                <h3 className="text-2xl font-semibold text-gray-800 mb-2">
+                  {program.day} - {program.title}
+                </h3>
+                <p className="text-gray-600 text-lg">{program.description}</p>
+                <p className="text-gray-700 font-semibold mt-3">Time: {program.time}</p>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+
+          return program.link ? (
+            <Link to={program.link} key={index}>
+              {CardContent}
+            </Link>
+          ) : (
+            <div key={index}>{CardContent}</div>
+          );
+        })}
       </div>
     </div>
   </section>
