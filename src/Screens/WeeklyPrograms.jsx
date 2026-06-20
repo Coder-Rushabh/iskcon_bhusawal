@@ -1,14 +1,15 @@
-import React from "react";
-import { usePageMeta } from "../hooks/usePageMeta";
-import img1 from "../assets/darshan/1.jpeg";
-import img2 from "../assets/darshan/2.jpeg";
-import img3 from "../assets/darshan/3.jpeg";
-import img4 from "../assets/darshan/4.jpeg";
-import img5 from "../assets/darshan/5.jpeg";
-import img6 from "../assets/darshan/6.jpeg";
-import img7 from "../assets/darshan/7.jpeg";
-import img8 from "../assets/darshan/8.jpeg";
-import img9 from "../assets/darshan/9.jpeg";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import img1 from '../assets/darshan/1.jpeg';
+import img2 from '../assets/darshan/2.jpeg';
+import img3 from '../assets/darshan/3.jpeg';
+import img4 from '../assets/darshan/4.jpeg';
+import img5 from '../assets/darshan/5.jpeg';
+import img6 from '../assets/darshan/6.jpeg';
+import img7 from '../assets/darshan/7.jpeg';
+import img8 from '../assets/darshan/8.jpeg';
+import img9 from '../assets/darshan/9.jpeg';
+import gaur from '../assets/gaur.jpg';
 
 const PROGRAMS = [
   {
@@ -22,8 +23,10 @@ const PROGRAMS = [
     day: "Friday",
     title: "Youth Boys Meetup",
     description:
-      "Interactive session for students and young professionals focused on spirituality and self-growth.",
-    time: "7:30 PM – 9:00 PM",
+      'A special interactive session for students and young professionals focused on spirituality and self-growth.',
+    time: '7:30 PM - 9:00 PM',
+    image: gaur,
+    link: '/iys'
   },
   {
     day: "Friday",
@@ -91,40 +94,49 @@ function WeeklyPrograms() {
               </article>
             ))}
           </div>
-
-          {/* Visit note */}
-          <div className="mt-px bg-saffron-50 border border-saffron-100 p-6 text-center text-sm text-stone-600">
-            All programs are held at{" "}
-            <strong className="text-stone-800">Sri Sri Radha Murlidhar Mandir</strong>, Bhusawal.
-            Entry is free and open to all. Prasadam is served.
-          </div>
-        </div>
-      </section>
-
-      {/* Darshan gallery */}
-      <section className="pb-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <p className="section-label mb-3">Sri Sri Radha Murlidhar</p>
-            <h2 className="font-serif text-3xl text-stone-900">Darshan Gallery</h2>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-px bg-stone-200">
-            {DARSHAN_IMAGES.map((img, i) => (
-              <div key={i} className="relative overflow-hidden group bg-stone-100">
-                <img
-                  src={img}
-                  alt={`Darshan ${i + 1} — Sri Sri Radha Murlidhar Mandir Bhusawal`}
-                  loading="lazy"
-                  className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        ))}
+      </div>
     </div>
-  );
-}
+  </section>
+);
+
+const WeeklyPrograms = () => (
+  <section className="py-16 bg-white">
+    <div className="max-w-7xl mx-auto px-6">
+      <h2 className="text-4xl font-bold text-center text-gray-800 mb-12">Weekly Programs</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {programs.map((program, index) => {
+          const CardContent = (
+            <div className="bg-white shadow-xl rounded-lg overflow-hidden transform transition-all duration-300 hover:scale-105 h-full">
+              <img src={program.image} alt={program.title} className="w-full h-48 object-cover" />
+              <div className="p-6">
+                <h3 className="text-2xl font-semibold text-gray-800 mb-2">
+                  {program.day} - {program.title}
+                </h3>
+                <p className="text-gray-600 text-lg">{program.description}</p>
+                <p className="text-gray-700 font-semibold mt-3">Time: {program.time}</p>
+              </div>
+            </div>
+          );
+
+          return program.link ? (
+            <Link to={program.link} key={index}>
+              {CardContent}
+            </Link>
+          ) : (
+            <div key={index}>{CardContent}</div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+);
+
+const App = () => (
+  <div>
+    {/* <DarshanGallery /> */}
+    <WeeklyPrograms />
+  </div>
+);
 
 export default WeeklyPrograms;
