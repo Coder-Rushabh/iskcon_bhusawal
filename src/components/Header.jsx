@@ -118,14 +118,14 @@ const Header = () => {
               </Link>
             ))}
 
-            <LanguageSwitcher />
-
             <Link
               to="/donation"
               className="bg-saffron-500 hover:bg-saffron-600 text-white text-sm font-medium px-5 py-2.5 tracking-wide transition-colors duration-200"
             >
               {t("header.nav_donate")}
             </Link>
+
+            <LanguageSwitcher />
           </div>
 
           {/* Mobile toggle */}
