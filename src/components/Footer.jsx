@@ -25,6 +25,8 @@ function Footer() {
     { to: "/iys", label: t("footer.link_iys") },
     { to: "/spiritual-study-center", label: t("footer.link_study") },
     { to: "/nav-mandir-nirman", label: t("footer.link_temple") },
+    { to: "/festivals", label: "Festival Calendar" },
+    { to: "/sudama-seva", label: "Sudama Seva" },
     { to: "/content", label: t("footer.link_videos") },
     { to: "/donation", label: t("footer.link_support") },
   ];

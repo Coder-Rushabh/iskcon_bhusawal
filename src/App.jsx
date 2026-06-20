@@ -19,6 +19,8 @@ import SpiritualStudyCenter from './Screens/SpiritualStudyCenter';
 import NewTempleConstruction from './Screens/NewTempleConstruction';
 import Donation from './Screens/Donation';
 import ContentMedia from './Screens/ContentMedia';
+import FestivalCalendar from './Screens/FestivalCalendar';
+import SudamaSeva from './Screens/SudamaSeva';
 
 function App() {
     return (
@@ -42,6 +44,8 @@ function App() {
                     <Route path="/nav-mandir-nirman" element={<NewTempleConstruction />} />
                     <Route path="/donation" element={<Donation />} />
                     <Route path="/content" element={<ContentMedia />} />
+                    <Route path="/festivals" element={<FestivalCalendar />} />
+                    <Route path="/sudama-seva" element={<SudamaSeva />} />
 
                     <Route path="*" element={<NotFound />} /> 
                 </Routes>
