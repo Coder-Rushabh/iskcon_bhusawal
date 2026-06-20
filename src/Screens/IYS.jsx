@@ -277,8 +277,7 @@ export default function IYSDetailPage() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
 
         {/* Contact Section */}
         <section className="bg-white rounded-[2.5rem] p-8 md:p-12 shadow-xl border border-amber-50">
