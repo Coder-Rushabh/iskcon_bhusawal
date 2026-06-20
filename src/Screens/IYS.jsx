@@ -367,5 +367,3 @@ export default function IYSDetailPage() {
     </div>
   );
 }
-
-export default IYS;
