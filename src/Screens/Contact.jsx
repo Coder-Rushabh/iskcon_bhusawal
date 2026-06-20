@@ -93,6 +93,39 @@ function Contact() {
           </div>
         </div>
       </div>
+
+      {/* Google Maps */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+        <div className="border border-stone-100 shadow-sm overflow-hidden">
+          <div className="bg-[#2C1208] px-6 py-4">
+            <h2 className="text-sm font-semibold tracking-[0.15em] uppercase text-saffron-300">
+              Find Us
+            </h2>
+          </div>
+          <iframe
+            title="ISKCON Bhusawal Location"
+            src="https://maps.google.com/maps?q=21.0460494,75.7843423&z=16&output=embed"
+            width="100%"
+            height="400"
+            style={{ border: 0, display: 'block' }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+        </div>
+        <a
+          href="https://maps.google.com/?q=21.0460494,75.7843423"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 mt-4 text-sm text-saffron-500 hover:text-saffron-600 font-medium transition-colors"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          Open in Google Maps
+        </a>
+      </div>
     </div>
   );
 }
