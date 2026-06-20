@@ -8,6 +8,7 @@ import Footer from './components/Footer.jsx'
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import ScrollToTop from './components/ScrollToTop.jsx';
+import InstallPrompt from './components/InstallPrompt.jsx';
 
 
 createRoot(document.getElementById('root')).render(
@@ -18,6 +19,7 @@ createRoot(document.getElementById('root')).render(
         <App />
       </ScrollToTop>
       <Footer />
+      <InstallPrompt />
     </BrowserRouter>
   </StrictMode>,
 )
