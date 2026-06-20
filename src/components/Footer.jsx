@@ -1,105 +1,143 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube } from "react-icons/fa";
-import img from "../assets/iskcon.png";
+import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
+import logo from "../assets/iskcon.png";
+
+const quickLinks = [
+  { to: "/", label: "Home" },
+  { to: "/iskcon-bhusawal", label: "About" },
+  { to: "/darshan", label: "Darshan" },
+  { to: "/weekly-programs", label: "Weekly Programs" },
+  { to: "/contact", label: "Contact" },
+];
+
+const engageLinks = [
+  { to: "/iys", label: "IYS Program" },
+  { to: "/spiritual-study-center", label: "Spiritual Study Center" },
+  { to: "/nav-mandir-nirman", label: "New Temple Construction" },
+  { to: "/content", label: "Videos & Articles" },
+  { to: "/donation", label: "Support Us" },
+];
+
+const socials = [
+  { href: "https://www.facebook.com/Iskconbhusawal.ssrm/", icon: <FaFacebookF size={13} />, label: "Facebook" },
+  { href: "https://www.instagram.com/iskcon_bhusawal/", icon: <FaInstagram size={13} />, label: "Instagram" },
+  { href: "https://www.youtube.com/@iskconbhusawal", icon: <FaYoutube size={13} />, label: "YouTube" },
+];
 
 function Footer() {
   return (
-    <footer className="w-full bg-gradient-to-b from-gray-900 via-gray-950 to-black text-gray-300 py-12">
-      <div className="max-w-7xl mx-auto px-6">
-        {/* Grid Layout */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 text-sm">
-          
-          {/* Logo + Address */}
-          <div className="lg:col-span-2 text-center lg:text-left">
-            <Link to="/" className="inline-flex justify-center lg:justify-start">
-              <img src={img} alt="ISKCON Bhusawal" className="w-40 hover:scale-105 transition-transform duration-300" />
+    <footer className="bg-[#2C1208] text-stone-300">
+      <div className="h-0.5 bg-saffron-400"></div>
+
+      <div className="max-w-7xl mx-auto px-6 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+          {/* Brand */}
+          <div>
+            <Link to="/">
+              <img
+                src={logo}
+                alt="ISKCON Bhusawal"
+                className="h-10 w-auto mb-5 brightness-0 invert opacity-70"
+                loading="lazy"
+              />
             </Link>
-            <p className="mt-4 text-gray-400 leading-relaxed">
-              <strong className="text-white">Sri Sri Radha Murlidhar Mandir</strong> <br />
+            <p className="text-sm text-saffron-200 font-medium mb-1">Sri Sri Radha Murlidhar Mandir</p>
+            <p className="text-sm text-stone-400 leading-relaxed">
               Near Roop Darshan Photo Studio,<br />
               Bhusawal, Maharashtra 425201
             </p>
+            <div className="flex gap-3 mt-6">
+              {socials.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.label}
+                  className="w-8 h-8 flex items-center justify-center border border-stone-600 text-stone-400 hover:border-saffron-400 hover:text-saffron-300 transition-colors duration-200"
+                >
+                  {s.icon}
+                </a>
+              ))}
+            </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Quick links */}
           <div>
-            <h4 className="text-white font-semibold mb-4 border-b border-gray-700 pb-2">Quick Links</h4>
-            <ul className="space-y-2">
-              <li><Link to="/" className="hover:text-indigo-400 transition-colors">Home</Link></li>
-              <li><Link to="/iskcon-bhusawal" className="hover:text-indigo-400 transition-colors">About</Link></li>
-              <li><Link to="/darshan" className="hover:text-indigo-400 transition-colors">Darshan</Link></li>
-              <li><Link to="/contact" className="hover:text-indigo-400 transition-colors">Contact</Link></li>
+            <h5 className="text-xs font-semibold tracking-[0.15em] uppercase text-saffron-300 mb-5">
+              Quick Links
+            </h5>
+            <ul className="space-y-3">
+              {quickLinks.map((l) => (
+                <li key={l.to}>
+                  <Link
+                    to={l.to}
+                    className="text-sm text-stone-300 hover:text-saffron-300 transition-colors duration-200"
+                  >
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Activities */}
+          {/* Engage */}
           <div>
-            <h4 className="text-white font-semibold mb-4 border-b border-gray-700 pb-2">Activities</h4>
-            <ul className="space-y-2">
-              <li><Link to="/weekly-programs" className="hover:text-indigo-400 transition-colors">Weekly Program</Link></li>
-              <li><Link to="/iys" className="hover:text-indigo-400 transition-colors">IYS Program</Link></li>
-              <li><Link to="/jagruti" className="hover:text-indigo-400 transition-colors">Jagruti Program</Link></li>
-              <li><Link to="/tours" className="hover:text-indigo-400 transition-colors">Pilgrimage Tour</Link></li>
+            <h5 className="text-xs font-semibold tracking-[0.15em] uppercase text-saffron-300 mb-5">
+              Engage
+            </h5>
+            <ul className="space-y-3">
+              {engageLinks.map((l) => (
+                <li key={l.to}>
+                  <Link
+                    to={l.to}
+                    className="text-sm text-stone-300 hover:text-saffron-300 transition-colors duration-200"
+                  >
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Other Pages */}
+          {/* Contact */}
           <div>
-            <h4 className="text-white font-semibold mb-4 border-b border-gray-700 pb-2">Other Pages</h4>
-            <ul className="space-y-2">
-              <li><Link to="/donate" className="hover:text-indigo-400 transition-colors">Donate Us</Link></li>
-              <li><Link to="/darshan" className="hover:text-indigo-400 transition-colors">Daily Darshan</Link></li>
-              <li><Link to="/privacy-policy" className="hover:text-indigo-400 transition-colors">Privacy Policy</Link></li>
-              <li><Link to="/terms-n-conditions" className="hover:text-indigo-400 transition-colors">Terms of Service</Link></li>
+            <h5 className="text-xs font-semibold tracking-[0.15em] uppercase text-saffron-300 mb-5">
+              Contact
+            </h5>
+            <ul className="space-y-3 text-sm text-stone-500">
+              <li>
+                <span className="block text-stone-400 text-xs mb-0.5 font-medium">Phone</span>
+                9011295877 &middot; 7767037980
+              </li>
+              <li>
+                <span className="block text-stone-400 text-xs mb-0.5 font-medium">Email</span>
+                infoiskcon.bhusawal@gmail.com
+              </li>
+              <li className="pt-3">
+                <Link
+                  to="/donation"
+                  className="inline-block bg-saffron-500 hover:bg-saffron-600 text-white text-xs font-medium px-5 py-2.5 tracking-widest uppercase transition-colors duration-200"
+                >
+                  Donate Now
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
 
-        {/* Divider & Bottom Section */}
-        <div className="mt-10 border-t border-gray-800 pt-6 flex flex-col sm:flex-row justify-between items-center">
-          <span className="text-gray-500 text-sm text-center sm:text-left">
-            © {new Date().getFullYear()}{" "}
-            <Link to="/" className="hover:text-indigo-400 transition-colors font-medium">
-              ISKCON Bhusawal
-            </Link>. All rights reserved.
-          </span>
-
-          {/* Social Icons */}
-          <div className="flex space-x-4 mt-5 sm:mt-0">
-            <a
-              href="https://www.facebook.com/Iskconbhusawal.ssrm/"
-              aria-label="Facebook"
-              target="_blank"
-              className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-800 hover:bg-indigo-600 transition-colors duration-300"
-            >
-              <FaFacebookF size={16} />
-            </a>
-            {/* <a
-              href="#"
-              aria-label="Twitter"
-              target="_blank"
-              className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-800 hover:bg-indigo-600 transition-colors duration-300"
-            >
-              <FaTwitter size={16} />
-            </a> */}
-            <a
-              href="https://www.instagram.com/iskcon_bhusawal/?hl=en"
-              target="_blank"
-              aria-label="Instagram"
-              className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-800 hover:bg-indigo-600 transition-colors duration-300"
-            >
-              <FaInstagram size={16} />
-            </a>
-            <a
-              href="https://www.youtube.com/@iskconbhusawal"
-              aria-label="YouTube"
-              target="_blank"
-              className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-800 hover:bg-indigo-600 transition-colors duration-300"
-            >
-              <FaYoutube size={16} />
-            </a>
-          </div>
+        <div className="mt-12 pt-6 border-t border-stone-700/50 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p className="text-xs text-stone-400 tracking-widest">
+            Hare Krishna &middot; Hare Krishna &middot; Krishna Krishna &middot; Hare Hare
+          </p>
+          <p className="text-xs text-stone-600">
+            &copy; {new Date().getFullYear()} ISKCON Bhusawal. All rights reserved.
+            &nbsp;&middot;&nbsp;
+            <Link to="/privacy-policy" className="hover:text-stone-400 transition-colors">Privacy</Link>
+            &nbsp;&middot;&nbsp;
+            <Link to="/terms-n-conditions" className="hover:text-stone-400 transition-colors">Terms</Link>
+          </p>
         </div>
       </div>
     </footer>

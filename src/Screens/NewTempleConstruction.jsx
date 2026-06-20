@@ -1,228 +1,161 @@
-// NewTempleConstruction.jsx
-
-import React, { useState } from "react";
-import {
-  FaMapMarkerAlt,
-  FaPhoneAlt,
-  FaEnvelope,
-  FaCalendarAlt,
-  FaRupeeSign,
-} from "react-icons/fa";
-import { Link } from 'react-router-dom';
-
-// Placeholder images — replace with your real ones
+import React from "react";
+import { Link } from "react-router-dom";
 import templeSite from "../assets/new_temple2.jpg";
-import foundation from "../assets/gaur.jpg";
 import d3 from "../assets/d3.png";
 import d2 from "../assets/d2.png";
+import { usePageMeta } from "../hooks/usePageMeta";
 
-const contact = {
-  address:
-    "Sri Sri Radha Murlidhar Mandir, Mohit Nagar, Near Radha krishna Residency, Ring Road, Bhusawal, Maharashtra 425201",
-  phone: "+91-9011219587 / +91-7767043798",
+const YOUTUBE_VIDEO_ID = "8ZUbkxtZeLk";
+
+const CONTACT = {
+  address: "Mohit Nagar, Near Radha Krishna Residency, Ring Road, Bhusawal, Maharashtra 425201",
+  phone: "+91-90112-19587 / +91-77670-43798",
   email: "infoiskcon.bhusawal@gmail.com",
 };
 
+const DONATION_OPTIONS = [
+  { label: "1 sq ft Sponsorship",          amount: "₹1,500",    desc: "Every square foot builds this sacred abode." },
+  { label: "2 sq ft Sponsorship",          amount: "₹2,800",    desc: "Double your contribution to the Lord's home." },
+  { label: "Pillar Sponsorship",           amount: "₹25,000",   desc: "Your name etched on a pillar for eternity." },
+  { label: "Altar / Shrine Sponsorship",   amount: "₹1,00,000", desc: "Sponsor the sacred altar where deities reside." },
+];
+
 function NewTempleConstruction() {
-  const youtubeVideoId = "8ZUbkxtZeLk";
-  const [selectedDonation, setSelectedDonation] = useState(null);
-
-  const donationOptions = [
-    { id: "1sqft", label: "1 sq ft", amount: "₹1,500" },
-    { id: "2sqft", label: "2 sq ft", amount: "₹2,800" },
-    { id: "pillar", label: "Pillar Sponsorship", amount: "₹25,000" },
-    { id: "altar", label: "Altar / Shrine Sponsorship", amount: "₹1,00,000" },
-  ];
-
-  function handleDonateClick(opt) {
-    setSelectedDonation(opt);
-    // you could open a modal / redirect to donate page etc.
-    alert(`You selected donation: ${opt.label} (${opt.amount})`);
-  }
+  usePageMeta({
+    title: "New Temple Construction — Sri Sri Radha Murlidhar, Bhusawal",
+    description:
+      "Support the construction of the new ISKCON Bhusawal temple — Sri Sri Radha Murlidhar Mandir. Donate and be part of building a permanent spiritual home.",
+  });
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 via-white to-amber-50 pb-16">
-      {/* Hero / Banner */}
-      <section className="relative h-96 overflow-hidden">
+    <div className="bg-stone-50">
+      {/* Hero */}
+      <div className="relative h-[70vh] min-h-[500px] overflow-hidden">
         <img
           src={templeSite}
-          alt="Temple site"
-          className="absolute inset-0 w-full h-full object-cover brightness-90"
+          alt="New ISKCON Bhusawal temple site"
+          className="absolute inset-0 w-full h-full object-cover"
+          fetchpriority="high"
         />
-        <div className="absolute inset-0 bg-black/30"></div>
-        <div className="relative z-10 flex flex-col items-center justify-center h-full px-6 text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-white leading-tight">
-            New Temple Construction
-            <br />
-            <span className="text-2xl font-light">Sri Sri Radha Murlidhar, Bhusawal</span>
-          </h1>
-          <p className="mt-4 text-lg md:text-xl text-amber-200">
-            A place to awaken spiritual joy & peace
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1A0A04]/90 via-black/40 to-black/10" />
+        <div className="relative h-full flex flex-col items-center justify-end text-center pb-16 px-4">
+          <p className="text-saffron-300 text-xs font-semibold tracking-[0.25em] uppercase mb-4">
+            Under Construction
           </p>
+          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-white leading-tight mb-3">
+            New Temple Construction
+          </h1>
+          <p className="font-serif text-saffron-200 italic text-xl mb-6">
+            Sri Sri Radha Murlidhar — Bhusawal
+          </p>
+          <p className="text-stone-300 text-sm max-w-xl leading-relaxed">
+            A place to awaken spiritual joy and peace for generations to come.
+          </p>
+        </div>
+      </div>
+
+      {/* Introduction */}
+      <section className="py-20 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="section-label mb-4">Our Dream</p>
+          <h2 className="section-title mb-6">A Permanent Spiritual Home</h2>
+          <div className="w-10 h-0.5 bg-saffron-400 mx-auto mb-8" />
+          <div className="space-y-5 text-stone-600 leading-relaxed text-[15px] text-left max-w-3xl mx-auto">
+            <p>
+              ISKCON Bhusawal is constructing a grand new temple for Sri Sri Radha
+              Murlidhar — a permanent, beautiful home for the Lord and devotees of
+              the Jalgaon district and beyond. The temple will serve as a center of
+              devotional culture, spiritual education, and community service.
+            </p>
+            <p>
+              This sacred project is sustained by the loving contributions of
+              devotees like you. Every donation — however large or small — is an
+              act of devotion and an eternal investment in the Lord's service.
+            </p>
+          </div>
+          <Link to="/donation" className="btn-primary mt-8 inline-flex">
+            Donate for Temple Construction
+          </Link>
         </div>
       </section>
 
-      <main className="max-w-6xl mx-auto px-6 mt-12 space-y-16">
-        {/* Video / Visual Progress */}
-        {/* Video / Visual Progress (Full Width) */}
-        {/* Video / Visual Progress (Full Width, No Scrollbar) */}
-        <section className="w-full py-8 bg-white mt-12 overflow-x-hidden">
-          <h2 className="text-3xl font-serif text-indigo-900 text-center mb-6">
-            Proposed Plan
-          </h2>
-          <div className="relative w-full">
-            <iframe
-              src={`https://www.youtube.com/embed/${youtubeVideoId}`}
-              title="Proposed Plan"
-              frameBorder="0"
-              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              className="w-full h-[80vh] sm:h-[70vh] md:h-[85vh] lg:h-[90vh] object-cover rounded-none"
-              style={{ display: "block" }}
-            />
+      {/* Donation options */}
+      <section className="py-20 bg-saffron-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-14">
+            <p className="section-label mb-4">How to Contribute</p>
+            <h2 className="section-title">Sponsorship Options</h2>
           </div>
-        </section>
-
-
-
-
-        {/* Features Graphical Showcase */}
-        {/* <section className="space-y-6">
-          <h3 className="text-2xl font-serif text-indigo-900">Temple Features</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="text-center p-4 bg-white rounded-lg shadow">
-              <img
-                src={foundation}
-                alt="Foundation"
-                className="w-full h-32 object-cover rounded"
-              />
-              <h4 className="mt-4 font-semibold text-indigo-800">Strong Foundation</h4>
-            </div>
-            <div className="text-center p-4 bg-white rounded-lg shadow">
-              <img
-                src={designRender}
-                alt="Design Render"
-                className="w-full h-32 object-cover rounded"
-              />
-              <h4 className="mt-4 font-semibold text-indigo-800">Traditional Design</h4>
-            </div>
-            <div className="text-center p-4 bg-white rounded-lg shadow">
-              <img
-                src={donationWall}
-                alt="Donation Wall sample"
-                className="w-full h-32 object-cover rounded"
-              />
-              <h4 className="mt-4 font-semibold text-indigo-800">
-                Donation Wall / Floor Plan
-              </h4>
-            </div>
-          </div>
-        </section> */}
-
-        {/* Donation Options */}
-        {/* <section className="space-y-6">
-          <h3 className="text-2xl font-serif text-indigo-900">How You Can Contribute</h3>
-          <p className="text-gray-700 leading-relaxed">
-            Pick a block (sq ft) or sponsor structural elements like pillars or altar. Your donation is immortalized as a part of this sacred structure.
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-            {donationOptions.map((opt) => (
-              <button
-                key={opt.id}
-                onClick={() => handleDonateClick(opt)}
-                className="border-2 border-amber-600 rounded-lg p-6 hover:bg-amber-100 transition"
-              >
-                <div className="text-xl font-semibold">{opt.label}</div>
-                <div className="mt-2 text-lg text-indigo-800">{opt.amount}</div>
-              </button>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-saffron-200">
+            {DONATION_OPTIONS.map((opt, i) => (
+              <div key={i} className="bg-white p-8">
+                <div className="w-8 h-0.5 bg-saffron-400 mb-5" />
+                <div className="font-serif text-3xl text-saffron-500 mb-2">{opt.amount}</div>
+                <h3 className="font-medium text-stone-900 text-sm mb-3">{opt.label}</h3>
+                <p className="text-stone-500 text-sm leading-relaxed">{opt.desc}</p>
+              </div>
             ))}
           </div>
-          {selectedDonation && (
-            <div className="mt-4 text-center text-indigo-900">
-              Selected: <strong>{selectedDonation.label}</strong> — {selectedDonation.amount}
-            </div>
-          )}
-        </section> */}
-
-        {/* Timeline / Milestones */}
-        {/* <section className="space-y-6">
-          <h3 className="text-2xl font-serif text-indigo-900">Timeline & Milestones</h3>
-          <ul className="space-y-4 text-gray-700">
-            <li className="flex items-start gap-3">
-              <FaCalendarAlt className="mt-1 text-amber-700" />
-              <span>
-                <strong>Jan 2024:</strong> Groundbreaking & foundation
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <FaCalendarAlt className="mt-1 text-amber-700" />
-              <span>
-                <strong>Mid 2024:</strong> Structural frame & walls
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <FaCalendarAlt className="mt-1 text-amber-700" />
-              <span>
-                <strong>Late 2024:</strong> Decorative & finishing work
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <FaCalendarAlt className="mt-1 text-amber-700" />
-              <span>
-                <strong>Early 2025 (expected):</strong> Consecration & opening
-              </span>
-            </li>
-          </ul>
-        </section> */}
-
-        <img
-          src={d3}
-          alt="Donation Wall sample"
-          className="w-full h-full object-cover rounded"
-        />
-        <img
-          src={d2}
-          alt="Donation Wall sample"
-          className="w-full h-full object-cover rounded"
-        />
-
- {/* “View More” Button */}
- <div className="flex justify-center">
-          <Link to="/donation">
-            <button className="py-2 px-5 border border-black rounded-full text-sm text-black font-semibold flex items-center gap-2 transition-all duration-500 hover:bg-white hover:text-[#d1a664]">
-              Donate for Temple Construction
-              <svg width="6" height="10" viewBox="0 0 6 10" fill="none">
-                <path
-                  d="M1 9L3.58579 6.41421C4.25245 5.74755 4.58579 5.41421 4.58579 5C4.58579 4.58579 4.25245 4.25245 3.58579 3.58579L1 1"
-                  stroke="currentColor"
-                  strokeWidth="1.6"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
-          </Link>
+          <div className="mt-8 text-center">
+            <Link to="/donation" className="btn-primary">
+              Make a Donation
+            </Link>
+          </div>
         </div>
+      </section>
 
-        {/* Contact / Support */}
-        <section className="bg-white rounded-2xl shadow-lg p-8 flex flex-col md:flex-row items-start gap-6">
-          <div className="flex items-center gap-3">
-            <FaMapMarkerAlt className="text-3xl text-indigo-900" />
-            <div>
-              <h4 className="text-lg font-semibold text-indigo-900">Address</h4>
-              <p className="text-gray-700">{contact.address}</p>
-            </div>
+      {/* Proposed plan video */}
+      <section className="py-20 bg-white">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <p className="section-label mb-4">Proposed Plan</p>
+            <h2 className="section-title">Temple Architecture &amp; Design</h2>
           </div>
-          <div className="mt-4 md:mt-0 md:ml-auto space-y-2 text-gray-700">
-            <p className="flex items-center gap-2">
-              <FaPhoneAlt className="text-indigo-700" /> <span>{contact.phone}</span>
-            </p>
-            <p className="flex items-center gap-2">
-              <FaEnvelope className="text-indigo-700" /> <span>{contact.email}</span>
-            </p>
+          <div className="aspect-video w-full bg-stone-100">
+            <iframe
+              src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?rel=0`}
+              title="New Temple Construction — Proposed Plan"
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="w-full h-full"
+            />
           </div>
-        </section>
-      </main>
+        </div>
+      </section>
+
+      {/* Design renders */}
+      <section className="bg-saffron-50 py-20">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <p className="section-label mb-4">Renders</p>
+            <h2 className="section-title">Temple Design</h2>
+          </div>
+          <div className="space-y-6">
+            <img src={d3} alt="Temple design render" loading="lazy" className="w-full shadow-xl" />
+            <img src={d2} alt="Temple design render 2" loading="lazy" className="w-full shadow-xl" />
+          </div>
+          <div className="mt-10 text-center">
+            <Link to="/donation" className="btn-primary">
+              Donate for Temple Construction
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact */}
+      <section className="bg-[#2C1208] py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+          <div>
+            <p className="section-label text-saffron-300 mb-3">Location</p>
+            <h2 className="font-serif text-2xl text-white mb-2">Temple Site Address</h2>
+            <p className="text-stone-400 text-sm max-w-lg">{CONTACT.address}</p>
+          </div>
+          <div className="shrink-0 space-y-2 text-sm text-stone-400">
+            <p><a href={`tel:${CONTACT.phone}`} className="hover:text-saffron-300 transition-colors">{CONTACT.phone}</a></p>
+            <p><a href={`mailto:${CONTACT.email}`} className="hover:text-saffron-300 transition-colors">{CONTACT.email}</a></p>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

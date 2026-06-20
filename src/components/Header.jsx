@@ -2,19 +2,31 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../assets/iskcon.png";
 
+const aboutLinks = [
+  { to: "/iskcon-bhusawal", label: "ISKCON Bhusawal" },
+  { to: "/iskcon-society", label: "ISKCON Society" },
+  { to: "/srila-prabhupada", label: "Srila Prabhupada" },
+];
+
+const navLinks = [
+  { to: "/", label: "Home" },
+  { to: "/darshan", label: "Darshan" },
+  { to: "/weekly-programs", label: "Programs" },
+  { to: "/content", label: "Content" },
+  { to: "/nav-mandir-nirman", label: "New Temple" },
+  { to: "/contact", label: "Contact" },
+];
+
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const dropdownRef = useRef();
 
-  const toggleMobileMenu = () => setIsMobileMenuOpen((prev) => !prev);
-  const toggleDropdown = () => setIsDropdownOpen((prev) => !prev);
-
-  // Close dropdown when clicking outside
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setIsDropdownOpen(false);
       }
     };
@@ -22,230 +34,136 @@ const Header = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Close menus on route change
   useEffect(() => {
     setIsDropdownOpen(false);
     setIsMobileMenuOpen(false);
   }, [location]);
 
-  const isActive = (path) =>
-    location.pathname === path
-      ? "text-white font-semibold"
-      : "text-[#3e2a14] hover:text-white transition-colors duration-300";
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const isActive = (path) => location.pathname === path;
+  const isAboutActive = aboutLinks.some((l) => l.to === location.pathname);
+
+  const linkClass = (active) =>
+    `text-sm font-medium tracking-wide transition-colors duration-200 ${
+      active ? "text-saffron-500" : "text-stone-700 hover:text-saffron-500"
+    }`;
 
   return (
-    <header className="sticky top-0 z-50">
-      <nav className="bg-gradient-to-r from-[#d1a664] to-[#c2935a] shadow-md">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between py-3">
-            {/* Logo Section */}
-            <Link to="/" className="flex items-center gap-3">
-              <img
-                src={logo}
-                alt="ISKCON Logo"
-                className="h-10 w-auto hover:scale-105 transition-transform duration-300"
-              />
-              <span className="text-lg md:text-xl font-serif font-bold text-white">
-                ISKCON Bhusawal
-              </span>
-            </Link>
+    <header
+      className={`sticky top-0 z-50 bg-white transition-shadow duration-300 ${
+        isScrolled ? "shadow-md" : "shadow-sm border-b border-stone-100"
+      }`}
+    >
+      {/* Announcement bar */}
+      <div className="bg-stone-950 text-stone-300 text-center py-2 text-xs tracking-widest font-light">
+        Hare Krishna &nbsp;&mdash;&nbsp; Sri Sri Radha Murlidhar Mandir, Bhusawal
+      </div>
 
-            {/* Mobile Menu Button */}
-            <button
-              onClick={toggleMobileMenu}
-              className="lg:hidden p-2 rounded-md text-white hover:bg-white/20 transition-colors"
-              aria-label="Toggle menu"
-            >
-              {isMobileMenuOpen ? (
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  stroke="white"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              ) : (
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  stroke="white"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              )}
-            </button>
-
-            {/* Desktop Menu */}
-            <div className="hidden lg:flex space-x-8 items-center">
-              <Link to="/" className={isActive("/")}>
-                Home
-              </Link>
-
-              {/* Dropdown */}
-              <div className="relative" ref={dropdownRef}>
-                <button
-                  onClick={toggleDropdown}
-                  className="text-[#3e2a14] hover:text-white transition-colors duration-300 flex items-center gap-1"
-                >
-                  About
-                  <svg
-                    className={`w-4 h-4 transform transition-transform ${isDropdownOpen ? "rotate-180" : ""
-                      }`}
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-
-                {isDropdownOpen && (
-                  <ul className="absolute left-0 mt-2 w-52 bg-white rounded-md shadow-lg overflow-hidden">
-                    <li>
-                      <Link
-                        to="/iskcon-bhusawal"
-                        className="block px-4 py-2 text-[#3e2a14] hover:bg-[#f5e6c5]"
-                      >
-                        ISKCON Bhusawal
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to="/iskcon-society"
-                        className="block px-4 py-2 text-[#3e2a14] hover:bg-[#f5e6c5]"
-                      >
-                        ISKCON Society
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to="/srila-prabhupada"
-                        className="block px-4 py-2 text-[#3e2a14] hover:bg-[#f5e6c5]"
-                      >
-                        Srila Prabhupada
-                      </Link>
-                    </li>
-                  </ul>
-                )}
-              </div>
-
-              <Link to="/darshan" className={isActive("/darshan")}>
-                Darshan
-              </Link>
-              <Link
-                to="/weekly-programs"
-                className={isActive("/weekly-programs")}
-              >
-                Weekly Programs
-              </Link>
-              {/* <Link to="/activities" className={isActive("/activities")}>
-                Activities
-              </Link> */}
-              <Link to="/contact" className={isActive("/contact")}>
-                Contact
-              </Link>
-              <div className="bg-[#d1a664] p-2 rounded-lg"><Link to="/donation" className={isActive("/contact")}>
-                Donation
-              </Link>
-              </div>
-
+      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-3 shrink-0">
+            <img src={logo} alt="ISKCON Bhusawal logo" className="h-9 w-auto" loading="eager" />
+            <div className="hidden sm:block leading-tight">
+              <div className="text-sm font-serif font-semibold text-stone-900">ISKCON Bhusawal</div>
+              <div className="text-[9px] tracking-[0.18em] text-stone-400 uppercase">Sri Sri Radha Murlidhar</div>
             </div>
+          </Link>
+
+          {/* Desktop nav */}
+          <div className="hidden lg:flex items-center gap-7">
+            <Link to="/" className={linkClass(isActive("/"))}>Home</Link>
+
+            {/* About dropdown */}
+            <div className="relative" ref={dropdownRef}>
+              <button
+                onClick={() => setIsDropdownOpen((p) => !p)}
+                className={`${linkClass(isAboutActive)} flex items-center gap-1`}
+              >
+                About
+                <svg
+                  className={`w-3.5 h-3.5 transition-transform ${isDropdownOpen ? "rotate-180" : ""}`}
+                  fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              {isDropdownOpen && (
+                <div className="absolute top-full left-0 mt-1 w-52 bg-white border border-stone-100 shadow-lg z-50">
+                  {aboutLinks.map((item) => (
+                    <Link
+                      key={item.to}
+                      to={item.to}
+                      className="block px-5 py-3 text-sm text-stone-700 hover:text-saffron-500 hover:bg-saffron-50 transition-colors"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {navLinks.slice(1).map((l) => (
+              <Link key={l.to} to={l.to} className={linkClass(isActive(l.to))}>
+                {l.label}
+              </Link>
+            ))}
+
+            <Link
+              to="/donation"
+              className="bg-saffron-500 hover:bg-saffron-600 text-white text-sm font-medium px-5 py-2.5 tracking-wide transition-colors duration-200"
+            >
+              Donate
+            </Link>
           </div>
 
-          {/* Mobile Menu */}
-          {isMobileMenuOpen && (
-            <div className="lg:hidden bg-[#d1a664] rounded-lg shadow-md py-4 px-3 space-y-2 animate-fadeIn">
-              <Link
-                to="/"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`block py-2 ${isActive("/")}`}
-              >
-                Home
-              </Link>
-
-              {/* Mobile Dropdown */}
-              <div className="relative">
-                <button
-                  onClick={toggleDropdown}
-                  className="block w-full text-left py-2 text-[#3e2a14] font-medium"
-                >
-                  About
-                </button>
-                {isDropdownOpen && (
-                  <div className="pl-4 space-y-1">
-                    <Link
-                      to="/iskcon-bhusawal"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="block py-1 text-[#3e2a14] hover:text-white"
-                    >
-                      ISKCON Bhusawal
-                    </Link>
-                    <Link
-                      to="/iskcon-society"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="block py-1 text-[#3e2a14] hover:text-white"
-                    >
-                      ISKCON Society
-                    </Link>
-                    <Link
-                      to="/srila-prabhupada"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="block py-1 text-[#3e2a14] hover:text-white"
-                    >
-                      Srila Prabhupada
-                    </Link>
-                  </div>
-                )}
-              </div>
-
-              <Link
-                to="/darshan"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`block py-2 ${isActive("/darshan")}`}
-              >
-                Darshan
-              </Link>
-              <Link
-                to="/weekly-programs"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`block py-2 ${isActive("/weekly-programs")}`}
-              >
-                Weekly Programs
-              </Link>
-              {/* <Link
-                to="/activities"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`block py-2 ${isActive("/activities")}`}
-              >
-                Activities
-              </Link> */}
-              <Link
-                to="/contact"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`block py-2 ${isActive("/contact")}`}
-              >
-                Contact
-              </Link>
-
-              <Link to="/donation"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`block py-2 ${isActive("/donation")}`}
-              >
-                Donation
-              </Link>
-            </div>
-          )}
+          {/* Mobile toggle */}
+          <button
+            onClick={() => setIsMobileMenuOpen((p) => !p)}
+            className="lg:hidden p-2 text-stone-600 hover:text-saffron-500 transition-colors"
+            aria-label="Toggle navigation menu"
+          >
+            {isMobileMenuOpen ? (
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            )}
+          </button>
         </div>
       </nav>
+
+      {/* Mobile menu */}
+      {isMobileMenuOpen && (
+        <div className="lg:hidden bg-white border-t border-stone-100 px-4 py-3">
+          {[navLinks[0], ...aboutLinks, ...navLinks.slice(1)].map((item) => (
+            <Link
+              key={item.to + item.label}
+              to={item.to}
+              className={`block py-3 text-sm font-medium border-b border-stone-50 ${
+                isActive(item.to) ? "text-saffron-500" : "text-stone-700"
+              }`}
+            >
+              {item.label}
+            </Link>
+          ))}
+          <Link
+            to="/donation"
+            className="block mt-4 text-center bg-saffron-500 hover:bg-saffron-600 text-white py-3.5 text-sm font-medium tracking-wide transition-colors"
+          >
+            Donate to the Temple
+          </Link>
+        </div>
+      )}
     </header>
   );
 };

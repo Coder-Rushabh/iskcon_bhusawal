@@ -1,145 +1,199 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import srilaPrabhupadaImage from "../assets/2.jpg";
 import kirtanImage from "../assets/iskcon-kirtan.jpg";
-import YouTubePlayer from "../components/YoutubePlayer";
+import prabhupada from "../assets/2.jpg";
+import { usePageMeta } from "../hooks/usePageMeta";
 
-const IskconBhusawal = () => {
-  const VIDEO_ID = "hGc-HlFonvo";
+const PROGRAMS = [
+  { title: "Morning & Evening Aarti", desc: "Daily mangal and sandhya aarti with melodious bhajans open to all visitors." },
+  { title: "Bhagavad Gita Classes",  desc: "Weekly guided study of the Gita — understanding life's purpose through Vedic wisdom." },
+  { title: "Sunday Love Feast",       desc: "Delicious sanctified prasadam and spiritual association every Sunday for the whole family." },
+  { title: "Kirtan & Bhajans",        desc: "Congregational chanting of the Hare Krishna maha-mantra — the yoga for this age." },
+];
+
+const VIDEO_ID = "hGc-HlFonvo";
+
+function IskconBhusawal() {
+  usePageMeta({
+    title: "ISKCON Bhusawal",
+    description:
+      "Learn about ISKCON Bhusawal — Sri Sri Radha Murlidhar Mandir. Our spiritual mission, programs, and history in Bhusawal, Maharashtra.",
+  });
 
   return (
-    <>
-      {/* Hero Section */}
-      <section className="relative w-full h-[500px] bg-gradient-to-b from-[#d1a664] to-[#f5e0b8] flex items-center justify-center text-center text-white overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://iskconmumbai.com/images/bg-iskcon-temple.jpg')] bg-cover bg-center opacity-30"></div>
-        <div className="relative z-10 px-6">
-          <h1 className="text-5xl md:text-6xl font-bold drop-shadow-lg">
-            ISKCON Bhusawal
-          </h1>
-          <p className="mt-4 text-lg max-w-2xl mx-auto drop-shadow-md">
-            A divine abode dedicated to Sri Sri Radha Murlidhar, spreading love
-            and devotion through the teachings of Lord Krishna.
-          </p>
-        </div>
-      </section>
-
-      {/* About Section */}
-      <section className="max-w-6xl mx-auto px-6 py-16 text-gray-800">
-        <h2 className="text-4xl font-bold text-center text-[#b3804f]">
-          About ISKCON Bhusawal
-        </h2>
-        <p className="mt-6 text-lg text-center text-gray-700 leading-relaxed">
-          ISKCON Bhusawal is a branch of the International Society for Krishna
-          Consciousness (ISKCON), founded by His Divine Grace A.C.
-          Bhaktivedanta Swami Prabhupada. It serves as a spiritual oasis where
-          people come to deepen their connection with Lord Krishna through
-          devotional service, kirtan, and the study of sacred scriptures.
+    <div className="bg-stone-50">
+      {/* Page header */}
+      <div className="page-header">
+        <p className="page-header-label">About Us</p>
+        <h1 className="page-header-title mb-4">ISKCON Bhusawal</h1>
+        <p className="text-stone-400 text-sm max-w-xl mx-auto leading-relaxed">
+          A divine abode dedicated to Sri Sri Radha Murlidhar — spreading love and
+          devotion through the teachings of Lord Krishna.
         </p>
-      </section>
+      </div>
 
-      {/* Spiritual Mission */}
-      <section className="bg-[#f6edd9] py-16 px-6">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center">
-          <img
-            src={srilaPrabhupadaImage}
-            alt="Srila Prabhupada"
-            className="rounded-3xl shadow-xl hover:scale-[1.02] transition-transform duration-300"
-          />
-          <div>
-            <h3 className="text-3xl font-semibold text-[#a46d3e]">
-              Our Spiritual Mission
-            </h3>
-            <p className="mt-4 text-lg text-gray-700 leading-relaxed">
-              Following the mission of Srila Prabhupada, ISKCON Bhusawal strives
-              to spread the timeless wisdom of the Bhagavad Gita and Srimad
-              Bhagavatam. Through kirtans, lectures, and prasadam distribution,
-              we aim to bring peace, devotion, and joy to every heart.
-            </p>
-            <p className="mt-3 text-gray-600 italic">
-              “Chant Hare Krishna and be happy.”
-            </p>
+      {/* About */}
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <p className="section-label mb-4">Our Story</p>
+              <h2 className="section-title mb-5">About ISKCON Bhusawal</h2>
+              <div className="w-10 h-0.5 bg-saffron-400 mb-7" />
+              <div className="space-y-5 text-stone-600 leading-relaxed text-[15px]">
+                <p>
+                  ISKCON Bhusawal is a branch of the International Society for Krishna
+                  Consciousness, founded by His Divine Grace A.C. Bhaktivedanta Swami
+                  Prabhupada. It serves as a spiritual oasis where people come to
+                  deepen their connection with Lord Krishna through devotional service,
+                  kirtan, and the study of sacred scriptures.
+                </p>
+                <p>
+                  The temple — Sri Sri Radha Murlidhar Mandir — is named after the
+                  presiding deities: Srimati Radharani and Lord Murlidhar (Krishna, the
+                  one who plays the flute). Located in Bhusawal, Maharashtra, it serves
+                  devotees and seekers from the entire Jalgaon district.
+                </p>
+                <p>
+                  We conduct courses, seminars, and workshops for all — children, youth,
+                  and families. Daily darshan, aarti, and prasadam distribution are open
+                  to everyone, free of charge.
+                </p>
+              </div>
+              <Link to="/contact" className="btn-primary mt-8 inline-flex">
+                Visit the Temple
+              </Link>
+            </div>
+
+            <div className="relative">
+              <img
+                src={prabhupada}
+                alt="ISKCON Bhusawal Temple"
+                loading="lazy"
+                className="w-full object-cover shadow-xl"
+                style={{ maxHeight: "520px", objectPosition: "top" }}
+              />
+              <div className="absolute -bottom-4 -left-4 w-24 h-24 border border-saffron-300 hidden lg:block pointer-events-none" />
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Events and Programs */}
-      <section className="py-16 bg-white px-6">
-        <div className="max-w-6xl mx-auto text-center">
-          <h3 className="text-3xl font-bold text-[#b3804f]">
-            Regular Programs & Events
-          </h3>
-          <p className="mt-4 text-gray-700 text-lg">
-            Join our spiritual gatherings and experience the bliss of devotion.
-          </p>
+      {/* Mission */}
+      <section className="bg-white py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div className="relative order-2 lg:order-1">
+              <img
+                src={kirtanImage}
+                alt="Kirtan at ISKCON Bhusawal"
+                loading="lazy"
+                className="w-full h-80 object-cover shadow-xl"
+              />
+            </div>
+            <div className="order-1 lg:order-2">
+              <p className="section-label mb-4">Our Mission</p>
+              <h2 className="section-title mb-5">Spiritual Mission</h2>
+              <div className="w-10 h-0.5 bg-saffron-400 mb-7" />
+              <div className="space-y-5 text-stone-600 leading-relaxed text-[15px]">
+                <p>
+                  Following the mission of Srila Prabhupada, ISKCON Bhusawal strives
+                  to spread the timeless wisdom of the Bhagavad Gita and Srimad
+                  Bhagavatam. Through kirtans, lectures, and prasadam distribution,
+                  we aim to bring peace, devotion, and joy to every heart.
+                </p>
+                <p>
+                  Our programs serve people at every stage of life — from children
+                  learning spiritual values in Gopal Fun School, to youth finding
+                  purpose through IYS, to adults deepening their practice through
+                  the Spiritual Study Center.
+                </p>
+              </div>
+              <blockquote className="mt-7 border-l-2 border-saffron-400 pl-5 text-stone-500 italic text-sm">
+                &ldquo;Chant Hare Krishna and be happy.&rdquo;
+                <span className="block mt-1 text-stone-400 not-italic text-xs">— Srila Prabhupada</span>
+              </blockquote>
+            </div>
+          </div>
+        </div>
+      </section>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mt-10">
-            {[
-              {
-                title: "Morning & Evening Aarti",
-                desc: "Daily mangal and sandhya aarti filled with melodious bhajans.",
-              },
-              {
-                title: "Bhagavad Gita Classes",
-                desc: "Understand life’s purpose through timeless wisdom sessions.",
-              },
-              {
-                title: "Sunday Love Feast",
-                desc: "Delicious prasadam and soulful association every Sunday.",
-              },
-              {
-                title: "Kirtan & Bhajans",
-                desc: "Experience divine energy through congregational chanting.",
-              },
-            ].map((item, i) => (
-              <div
-                key={i}
-                className="bg-[#f3d4a5] rounded-xl shadow-lg p-6 hover:bg-[#e6bf7e] transition duration-300"
-              >
-                <h4 className="text-xl font-semibold text-[#5c3d1f] mb-2">
-                  {item.title}
-                </h4>
-                <p className="text-gray-700 text-sm">{item.desc}</p>
+      {/* Programs */}
+      <section className="py-20 bg-saffron-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-14">
+            <p className="section-label mb-4">Join Us</p>
+            <h2 className="section-title">Regular Programs &amp; Events</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-saffron-200">
+            {PROGRAMS.map((item, i) => (
+              <div key={i} className="bg-white p-8">
+                <div className="w-8 h-0.5 bg-saffron-400 mb-5" />
+                <h3 className="font-serif text-lg text-stone-900 mb-3">{item.title}</h3>
+                <p className="text-stone-500 text-sm leading-relaxed">{item.desc}</p>
               </div>
             ))}
           </div>
+          <div className="mt-8 text-center">
+            <Link to="/weekly-programs" className="btn-primary">
+              View Full Schedule
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* Kirtan Image Section */}
-      <section className="relative w-full h-[400px] overflow-hidden">
+      {/* Kirtan video banner */}
+      <section className="relative h-72 overflow-hidden">
         <img
           src={kirtanImage}
-          alt="Kirtan"
-          className="w-full h-full object-cover brightness-75"
+          alt="Kirtan at ISKCON Bhusawal"
+          loading="lazy"
+          className="absolute inset-0 w-full h-full object-cover brightness-50"
         />
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center">
-          <h2 className="text-3xl md:text-5xl font-bold">Chant and Be Happy</h2>
-          <p className="mt-3 text-lg max-w-2xl">
-            Join our kirtan sessions and experience the pure joy of Krishna
-            consciousness.
-          </p>
+        <div className="relative h-full flex flex-col items-center justify-center text-center px-4">
+          <p className="section-label text-saffron-300 mb-4">Join Us in Devotion</p>
+          <h2 className="font-serif text-4xl text-white mb-6">Chant and Be Happy</h2>
+          <Link to="/contact" className="btn-ghost text-white hover:bg-white hover:text-stone-900">
+            Plan Your Visit
+          </Link>
         </div>
       </section>
 
-      {/* Call to Action */}
-      <section className="py-16 text-center bg-[#d1a664] text-white">
-        <h3 className="text-3xl font-bold">Visit ISKCON Bhusawal</h3>
-        <p className="mt-4 text-lg max-w-3xl mx-auto">
-          Be part of our growing family of devotees. Participate in kirtans,
-          seva, and festivals celebrating Lord Krishna.
+      {/* YouTube video */}
+      <section className="py-20 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="section-label text-center mb-4">Watch</p>
+          <h2 className="font-serif text-3xl text-stone-900 text-center mb-10">
+            ISKCON Bhusawal on YouTube
+          </h2>
+          <div className="aspect-video w-full bg-stone-100">
+            <iframe
+              src={`https://www.youtube.com/embed/${VIDEO_ID}?rel=0`}
+              title="ISKCON Bhusawal"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="w-full h-full"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="bg-saffron-500 py-16 text-center">
+        <h2 className="font-serif text-3xl text-white mb-4">Visit ISKCON Bhusawal</h2>
+        <p className="text-saffron-100 text-sm max-w-xl mx-auto mb-8 leading-relaxed">
+          Be part of our growing family of devotees. Participate in kirtans, seva,
+          and festivals celebrating the glory of Lord Krishna.
         </p>
         <Link
           to="/contact"
-          className="mt-8 inline-block bg-white text-[#d1a664] font-semibold px-8 py-3 rounded-full shadow-lg hover:bg-gray-100 transition"
+          className="inline-block bg-white text-saffron-600 hover:bg-saffron-50 text-sm font-medium px-8 py-3.5 tracking-wide transition-colors"
         >
           Contact Us
         </Link>
       </section>
-
-      {/* Embedded YouTube Video */}
-      <YouTubePlayer videoId={VIDEO_ID} />
-    </>
+    </div>
   );
-};
+}
 
 export default IskconBhusawal;

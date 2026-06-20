@@ -1,45 +1,64 @@
-import React from 'react';
+import React from "react";
+import { Link } from "react-router-dom";
 import img from "../assets/2.jpg";
 
 function Founder() {
   return (
-    <section className="relative py-16 bg-gradient-to-br from-amber-50 via-white to-amber-100 overflow-hidden">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-20 items-center">
-          
-          {/* Left Text Section */}
-          <div className="lg:col-span-6 space-y-6">
-            <h2 className="text-4xl sm:text-5xl font-serif font-bold text-gray-900 text-center lg:text-left">
-              Our Founder Acharya
-            </h2>
-
-            <h4 className="text-lg sm:text-xl font-semibold text-gray-800 text-center lg:text-left">
-              HIS DIVINE GRACE A.C. BHAKTIVEDANTA SWAMI PRABHUPADA
-            </h4>
-
-            <p className="text-gray-700 text-base leading-relaxed text-justify">
-              Srila Prabhupada (1896–1977) was an extraordinary personality who dedicated his life to teaching the world about Krishna consciousness — ancient India’s most noble message of spiritual wisdom. In 1965, at the age of 69, he sailed from India to New York to share Lord Krishna’s message, following the order of his spiritual master, Srila Bhaktisiddhanta Saraswati Thakura, representing a line of teachers dating back to Lord Krishna Himself.
-            </p>
-
-            <p className="text-gray-700 text-base leading-relaxed text-justify">
-              Srila Prabhupada’s most significant contribution, however, is his books. Highly respected by scholars for their authority, depth, and clarity, they are used as textbooks in numerous college courses. His writings have been translated into over fifty languages, making the Bhaktivedanta Book Trust — founded in 1972 — the world’s largest publisher of books on Indian religion and philosophy.
-            </p>
-
-            <p className="text-gray-700 text-base leading-relaxed text-justify">
-              In just twelve years, despite his advanced age, Srila Prabhupada circled the globe fourteen times on lecture tours to six continents — all while continuing to write prolifically. His works form a vast library of Vedic philosophy, literature, and culture that continues to inspire millions.
-            </p>
+    <section className="bg-stone-50 py-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          {/* Image */}
+          <div className="relative order-2 lg:order-1">
+            <img
+              src={img}
+              alt="His Divine Grace A.C. Bhaktivedanta Swami Srila Prabhupada"
+              loading="lazy"
+              className="w-full object-cover object-top shadow-xl"
+              style={{ maxHeight: "580px" }}
+            />
+            {/* Offset border decoration */}
+            <div className="absolute -bottom-4 -right-4 w-28 h-28 border border-saffron-300 hidden lg:block pointer-events-none" />
           </div>
 
-          {/* Right Image Section */}
-          <div className="lg:col-span-6 flex justify-center">
-            <div className="relative w-full sm:w-4/5 lg:w-full group">
-              <img
-                src={img}
-                alt="Srila Prabhupada"
-                className="rounded-3xl shadow-xl object-cover w-full h-full transform transition duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition duration-700"></div>
+          {/* Text */}
+          <div className="order-1 lg:order-2">
+            <p className="section-label mb-4">Our Founder Acharya</p>
+            <h2 className="font-serif text-4xl lg:text-5xl text-stone-900 leading-tight mb-2">
+              Srila Prabhupada
+            </h2>
+            <p className="text-xs tracking-[0.2em] uppercase text-stone-400 mb-8">
+              His Divine Grace A.C. Bhaktivedanta Swami
+            </p>
+            <div className="w-10 h-0.5 bg-saffron-400 mb-8" />
+
+            <div className="space-y-5 text-stone-600 leading-relaxed text-[15px]">
+              <p>
+                Srila Prabhupada (1896–1977) dedicated his life to sharing the ancient wisdom of
+                Krishna consciousness with the world. In 1965, at the age of 69, he arrived in
+                New York to fulfil the vision of his spiritual master — to spread Vedic teachings
+                to every corner of the globe.
+              </p>
+              <p>
+                Through tireless effort, he established the International Society for Krishna
+                Consciousness (ISKCON), founded the Bhaktivedanta Book Trust, and circled the
+                globe fourteen times, inspiring millions with his writings and teachings.
+              </p>
+              <p>
+                His books — translated into over 50 languages — form a vast library of Vedic
+                philosophy and continue to guide seekers worldwide toward a life of devotion,
+                clarity, and spiritual fulfilment.
+              </p>
             </div>
+
+            <Link
+              to="/srila-prabhupada"
+              className="inline-flex items-center gap-2 mt-8 text-sm font-medium text-saffron-500 hover:text-saffron-600 transition-colors tracking-wide"
+            >
+              Read more
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
           </div>
         </div>
       </div>

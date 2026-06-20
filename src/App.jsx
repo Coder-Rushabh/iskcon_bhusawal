@@ -18,6 +18,7 @@ import IYSDetailPage from './Screens/IYS';
 import SpiritualStudyCenter from './Screens/SpiritualStudyCenter';
 import NewTempleConstruction from './Screens/NewTempleConstruction';
 import Donation from './Screens/Donation';
+import ContentMedia from './Screens/ContentMedia';
 
 function App() {
     return (
@@ -40,6 +41,7 @@ function App() {
                     <Route path="/spiritual-study-center" element={<SpiritualStudyCenter />} />
                     <Route path="/nav-mandir-nirman" element={<NewTempleConstruction />} />
                     <Route path="/donation" element={<Donation />} />
+                    <Route path="/content" element={<ContentMedia />} />
 
                     <Route path="*" element={<NotFound />} /> 
                 </Routes>
