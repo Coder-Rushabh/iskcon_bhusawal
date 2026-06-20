@@ -1,28 +1,31 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import logo from "../assets/iskcon.png";
-
-const aboutLinks = [
-  { to: "/iskcon-bhusawal", label: "ISKCON Bhusawal" },
-  { to: "/iskcon-society", label: "ISKCON Society" },
-  { to: "/srila-prabhupada", label: "Srila Prabhupada" },
-];
-
-const navLinks = [
-  { to: "/", label: "Home" },
-  { to: "/darshan", label: "Darshan" },
-  { to: "/weekly-programs", label: "Programs" },
-  { to: "/content", label: "Content" },
-  { to: "/nav-mandir-nirman", label: "New Temple" },
-  { to: "/contact", label: "Contact" },
-];
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const Header = () => {
+  const { t } = useTranslation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const dropdownRef = useRef();
+
+  const aboutLinks = [
+    { to: "/iskcon-bhusawal", label: t("header.about_iskcon_bhusawal") },
+    { to: "/iskcon-society", label: t("header.about_iskcon_society") },
+    { to: "/srila-prabhupada", label: t("header.about_srila_prabhupada") },
+  ];
+
+  const navLinks = [
+    { to: "/", label: t("header.nav_home") },
+    { to: "/darshan", label: t("header.nav_darshan") },
+    { to: "/weekly-programs", label: t("header.nav_programs") },
+    { to: "/content", label: t("header.nav_content") },
+    { to: "/nav-mandir-nirman", label: t("header.nav_new_temple") },
+    { to: "/contact", label: t("header.nav_contact") },
+  ];
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -61,7 +64,7 @@ const Header = () => {
     >
       {/* Announcement bar */}
       <div className="bg-stone-950 text-stone-300 text-center py-2 text-xs tracking-widest font-light">
-        Hare Krishna &nbsp;&mdash;&nbsp; Sri Sri Radha Murlidhar Mandir, Bhusawal
+        {t("header.announcement")}
       </div>
 
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -77,7 +80,7 @@ const Header = () => {
 
           {/* Desktop nav */}
           <div className="hidden lg:flex items-center gap-7">
-            <Link to="/" className={linkClass(isActive("/"))}>Home</Link>
+            <Link to="/" className={linkClass(isActive("/"))}>{t("header.nav_home")}</Link>
 
             {/* About dropdown */}
             <div className="relative" ref={dropdownRef}>
@@ -85,7 +88,7 @@ const Header = () => {
                 onClick={() => setIsDropdownOpen((p) => !p)}
                 className={`${linkClass(isAboutActive)} flex items-center gap-1`}
               >
-                About
+                {t("header.nav_about")}
                 <svg
                   className={`w-3.5 h-3.5 transition-transform ${isDropdownOpen ? "rotate-180" : ""}`}
                   fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"
@@ -115,30 +118,35 @@ const Header = () => {
               </Link>
             ))}
 
+            <LanguageSwitcher />
+
             <Link
               to="/donation"
               className="bg-saffron-500 hover:bg-saffron-600 text-white text-sm font-medium px-5 py-2.5 tracking-wide transition-colors duration-200"
             >
-              Donate
+              {t("header.nav_donate")}
             </Link>
           </div>
 
           {/* Mobile toggle */}
-          <button
-            onClick={() => setIsMobileMenuOpen((p) => !p)}
-            className="lg:hidden p-2 text-stone-600 hover:text-saffron-500 transition-colors"
-            aria-label="Toggle navigation menu"
-          >
-            {isMobileMenuOpen ? (
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            ) : (
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            )}
-          </button>
+          <div className="lg:hidden flex items-center gap-3">
+            <LanguageSwitcher />
+            <button
+              onClick={() => setIsMobileMenuOpen((p) => !p)}
+              className="p-2 text-stone-600 hover:text-saffron-500 transition-colors"
+              aria-label="Toggle navigation menu"
+            >
+              {isMobileMenuOpen ? (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
+            </button>
+          </div>
         </div>
       </nav>
 
@@ -160,7 +168,7 @@ const Header = () => {
             to="/donation"
             className="block mt-4 text-center bg-saffron-500 hover:bg-saffron-600 text-white py-3.5 text-sm font-medium tracking-wide transition-colors"
           >
-            Donate to the Temple
+            {t("header.nav_donate_full")}
           </Link>
         </div>
       )}

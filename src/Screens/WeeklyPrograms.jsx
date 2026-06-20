@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import img1 from '../assets/darshan/1.jpeg';
 import img2 from '../assets/darshan/2.jpeg';
 import img3 from '../assets/darshan/3.jpeg';
@@ -63,29 +64,39 @@ function ClockIcon() {
 }
 
 function WeeklyPrograms() {
+  const { t } = useTranslation();
+
+  const programs = t('weekly_programs.programs', { returnObjects: true });
+
+  const TIMES = ['7:00 PM – 9:30 PM', '7:30 PM - 9:00 PM', '4:00 PM – 6:30 PM', '8:00 AM – 10:00 AM', '10:00 AM – 11:00 AM'];
+  const LINKS = [null, '/iys', null, null, null];
+
   return (
     <div className="bg-stone-50">
       {/* Page header */}
       <div className="page-header">
-        <p className="page-header-label">Join Us in Devotion</p>
-        <h1 className="page-header-title">Weekly Programs</h1>
+        <p className="page-header-label">{t('weekly_programs.join_label')}</p>
+        <h1 className="page-header-title">{t('weekly_programs.title')}</h1>
       </div>
 
       {/* Program cards */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-stone-200">
-            {PROGRAMS.map((p, i) => (
+            {programs.map((p, i) => (
               <article key={i} className="bg-white p-8 flex flex-col">
                 <span className="section-label mb-4">{p.day}</span>
                 <h3 className="font-serif text-xl text-stone-900 mb-3 leading-snug">{p.title}</h3>
-                <p className="text-stone-500 text-sm leading-relaxed flex-1 mb-6">
-                  {p.description}
-                </p>
+                <p className="text-stone-500 text-sm leading-relaxed flex-1 mb-6">{p.desc}</p>
                 <div className="flex items-center gap-2 text-xs text-stone-400 border-t border-stone-100 pt-4">
                   <ClockIcon />
-                  <span>{p.time}</span>
+                  <span>{TIMES[i]}</span>
                 </div>
+                {LINKS[i] && (
+                  <Link to={LINKS[i]} className="mt-3 text-xs text-saffron-500 hover:text-saffron-600 font-medium transition-colors">
+                    Learn more →
+                  </Link>
+                )}
               </article>
             ))}
           </div>

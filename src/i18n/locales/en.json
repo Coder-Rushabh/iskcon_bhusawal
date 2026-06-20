@@ -1,0 +1,126 @@
+{
+  "header": {
+    "announcement": "Hare Krishna — Sri Sri Radha Murlidhar Mandir, Bhusawal",
+    "nav_home": "Home",
+    "nav_about": "About",
+    "nav_darshan": "Darshan",
+    "nav_programs": "Programs",
+    "nav_content": "Content",
+    "nav_new_temple": "New Temple",
+    "nav_contact": "Contact",
+    "nav_donate": "Donate",
+    "nav_donate_full": "Donate to the Temple",
+    "about_iskcon_bhusawal": "ISKCON Bhusawal",
+    "about_iskcon_society": "ISKCON Society",
+    "about_srila_prabhupada": "Srila Prabhupada"
+  },
+  "hero": {
+    "label": "Sri Sri Radha Murlidhar Mandir — Bhusawal",
+    "title_line1": "Where Devotion Meets",
+    "title_line2": "Divine Grace",
+    "mantra": "Hare Krishna Hare Krishna · Krishna Krishna Hare Hare",
+    "cta_temple": "New Temple Construction",
+    "cta_support": "Support Our Mission",
+    "scroll": "Scroll"
+  },
+  "services": {
+    "label": "What We Offer",
+    "prasadam_title": "Free Prasadam",
+    "prasadam_desc": "Sanctified vegetarian food distributed after every program.",
+    "gita_title": "Bhagavad Gita",
+    "gita_desc": "Weekly classes explaining the timeless wisdom of the Gita.",
+    "kirtan_title": "Kirtan Sessions",
+    "kirtan_desc": "Congregational chanting of the Hare Krishna maha-mantra.",
+    "youth_title": "Youth Programs",
+    "youth_desc": "Structured spiritual programs for students and young adults."
+  },
+  "donation_cta": {
+    "label": "Support the Mission",
+    "title": "Contribute to the New Temple Construction",
+    "desc": "Every contribution — small or large — is an act of devotion and a step toward creating a permanent home for Sri Sri Radha Murlidhar.",
+    "donate_now": "Donate Now",
+    "view_progress": "View Progress"
+  },
+  "temple_intro": {
+    "label": "About the Temple",
+    "title": "Vrindavan in Bhusawal",
+    "desc": "Sri Sri Radha Murlidhar Mandir is a sacred space where devotees experience the joy of Krishna consciousness through kirtan, spiritual classes, and loving community service.",
+    "feature1_title": "New Temple Construction",
+    "feature1_desc": "A magnificent new temple dedicated to Sri Sri Radha Murlidhar is rising in Bhusawal — a sanctuary of devotion, peace, and divine beauty.",
+    "feature2_title": "Spiritual Study Center",
+    "feature2_desc": "Explore the depth of Bhagavad-Gita and Srimad Bhagavatam through guided courses, satsangs, and personal mentorship.",
+    "feature3_title": "Youth Spiritual Programs",
+    "feature3_desc": "The ISKCON Youth Service nurtures spiritual values and discipline in the next generation through engaging and transformative programs.",
+    "learn_more": "Learn more",
+    "stat1_label": "Year ISKCON Founded",
+    "stat2_label": "Centres Worldwide",
+    "stat3_label": "Years of Service",
+    "stat4_label": "Temples in India"
+  },
+  "timings": {
+    "label": "Daily Schedule",
+    "title": "Temple Aarti Timings",
+    "desc1": "The daily aarti schedule at Sri Sri Radha Murlidhar Mandir marks the rhythm of devotional life. Each ceremony is an opportunity to receive the Lord's darshan and offer your heart in service.",
+    "desc2": "All are welcome to attend any aarti. The temple is open from 4:30 AM to 1:00 PM and 4:00 PM to 9:00 PM daily.",
+    "schedule_title": "Aarti & Darshan Schedule",
+    "note_daily": "Daily",
+    "mangal": "Mangal Aarti",
+    "sringara": "Sringara Darshan",
+    "raj_bhog": "Raj Bhog Aarti",
+    "uthapana": "Uthapana Aarti",
+    "sandhya": "Sandhya Aarti",
+    "shayana": "Shayana Aarti"
+  },
+  "footer": {
+    "address": "Near Roop Darshan Photo Studio, Bhusawal, Maharashtra 425201",
+    "quick_links": "Quick Links",
+    "engage": "Engage",
+    "contact": "Contact",
+    "phone_label": "Phone",
+    "email_label": "Email",
+    "donate_now": "Donate Now",
+    "mantra": "Hare Krishna · Hare Krishna · Krishna Krishna · Hare Hare",
+    "copyright": "ISKCON Bhusawal. All rights reserved.",
+    "link_home": "Home",
+    "link_about": "About",
+    "link_darshan": "Darshan",
+    "link_programs": "Weekly Programs",
+    "link_contact": "Contact",
+    "link_iys": "IYS Program",
+    "link_study": "Spiritual Study Center",
+    "link_temple": "New Temple Construction",
+    "link_videos": "Videos & Articles",
+    "link_support": "Support Us"
+  },
+  "weekly_programs": {
+    "join_label": "Join Us in Devotion",
+    "title": "Weekly Programs",
+    "programs": [
+      {
+        "day": "Tuesday",
+        "title": "Bhagavad Gita Class",
+        "desc": "Deep discussion on the teachings of Bhagavad Gita, followed by Q&A, kirtan, and mahaprasad."
+      },
+      {
+        "day": "Friday",
+        "title": "Youth Boys Meetup",
+        "desc": "A special interactive session for students and young professionals focused on spirituality and self-growth."
+      },
+      {
+        "day": "Friday",
+        "title": "Chetna Program",
+        "desc": "A devotional session designed for women and girls, focused on self-improvement and bhakti."
+      },
+      {
+        "day": "Sunday",
+        "title": "Bhagavatam Class & Sunday Feast",
+        "desc": "Insightful discourse on Srimad Bhagavatam followed by kirtan and the celebrated Sunday prasadam."
+      },
+      {
+        "day": "Sunday",
+        "title": "Gopal Fun School",
+        "desc": "Spiritual education for children through engaging stories, devotional songs, and creative activities."
+      }
+    ]
+  }
+}
