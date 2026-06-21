@@ -98,6 +98,47 @@ const BANK = {
   receipt: "7767043798",
 };
 
+const SEVA_CATEGORIES = [
+  { key: "vigrah", label: "Vigrah Seva", data: VIGRAH_SEVA },
+  { key: "sadhu",  label: "Sadhu Seva",  data: SADHU_SEVA },
+  { key: "granth", label: "Granth Dan",  data: GRANTH_DAN },
+  { key: "nitya",  label: "Nitya Dan",   data: NITYA_DAN },
+];
+
+const RAZORPAY_KEY_ID = "rzp_test_YourKeyHere";
+
+function openRazorpay(amountInRupees, description) {
+  if (!window.Razorpay) {
+    alert("Payment gateway not loaded. Please refresh and try again.");
+    return;
+  }
+  const rzp = new window.Razorpay({
+    key: RAZORPAY_KEY_ID,
+    amount: amountInRupees * 100,
+    currency: "INR",
+    name: "ISKCON Bhusawal",
+    description,
+    image: "/src/assets/iskcon.png",
+    handler(res) {
+      alert(`Hare Krishna! Donation received.\nPayment ID: ${res.razorpay_payment_id}\nThank you!`);
+    },
+    notes: { temple: "Sri Sri Radha Murlidhar Mandir, Bhusawal" },
+    theme: { color: "#C8860A" },
+  });
+  rzp.open();
+}
+
+function handleUpiFallback(amount, description) {
+  const params = new URLSearchParams({
+    pa: "037322010400054@axisbank",
+    pn: "INTERNATIONAL SOCIETY FOR KRISHNA CONSCIOUSNESS",
+    am: amount.toString(),
+    tn: description,
+    cu: "INR",
+  });
+  window.open(`upi://pay?${params.toString()}`, "_blank");
+}
+
 // ── Sub-components ────────────────────────────────────────────────────────────
 
 function SevaCard({ seva, index }) {
@@ -154,12 +195,31 @@ export default function SudamaSeva() {
   });
 
   const [copiedField, setCopiedField] = useState(null);
+  const [donSeva, setDonSeva] = useState("vigrah");
+  const [donItem, setDonItem] = useState(null);
+  const [customAmount, setCustomAmount] = useState("");
+  const [useUpi, setUseUpi] = useState(false);
 
   const copyToClipboard = (text, field) => {
     navigator.clipboard.writeText(text).then(() => {
       setCopiedField(field);
       setTimeout(() => setCopiedField(null), 2000);
     });
+  };
+
+  const handleSevaDonate = () => {
+    const amount = donItem ? donItem.amount : parseFloat(customAmount);
+    if (!amount || amount <= 0) {
+      alert("Please select a seva or enter a custom amount.");
+      return;
+    }
+    const sevaLabel = donItem ? `${donItem.en} — ${SEVA_CATEGORIES.find(s => s.key === donSeva)?.label}` : "Sudama Seva Donation";
+    const desc = `${sevaLabel} — ISKCON Bhusawal`;
+    if (useUpi) {
+      handleUpiFallback(amount, desc);
+    } else {
+      openRazorpay(amount, desc);
+    }
   };
 
   return (
@@ -237,6 +297,108 @@ export default function SudamaSeva() {
         <div id="nitya"><SevaCard seva={NITYA_DAN} index={3} /></div>
       </section>
 
+      {/* ── Inline Donation ── */}
+      <section id="donate" className="bg-[#2C1208] py-16 px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-10">
+            <p className="text-saffron-300 text-xs font-semibold tracking-[0.3em] uppercase mb-3">Make Your Offering</p>
+            <h2 className="font-serif text-3xl text-white">Donate Online</h2>
+            <div className="w-10 h-0.5 bg-saffron-400 mx-auto mt-4" />
+            <p className="text-stone-400 text-sm mt-4 max-w-md mx-auto">
+              Select a seva category and amount, then donate securely via Razorpay or UPI.
+            </p>
+          </div>
+
+          <div className="bg-stone-800/60 border border-stone-700 p-6 sm:p-8 max-w-2xl mx-auto">
+            {/* Category tabs */}
+            <p className="text-stone-400 text-[11px] font-semibold tracking-[0.2em] uppercase mb-3">1. Select Seva</p>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-7">
+              {SEVA_CATEGORIES.map(s => (
+                <button
+                  key={s.key}
+                  onClick={() => { setDonSeva(s.key); setDonItem(null); }}
+                  className={`py-2.5 text-xs font-medium border transition-colors ${
+                    donSeva === s.key
+                      ? "bg-saffron-500 border-saffron-500 text-white"
+                      : "border-stone-600 text-stone-400 hover:border-saffron-500 hover:text-saffron-300"
+                  }`}
+                >
+                  {s.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Amount options */}
+            <p className="text-stone-400 text-[11px] font-semibold tracking-[0.2em] uppercase mb-3">2. Select Amount</p>
+            <div className="grid grid-cols-2 gap-2 mb-4">
+              {SEVA_CATEGORIES.find(s => s.key === donSeva).data.items.map((item, i) => (
+                <button
+                  key={i}
+                  onClick={() => { setDonItem(item); setCustomAmount(""); }}
+                  className={`text-left p-3 border transition-colors ${
+                    donItem === item
+                      ? "border-saffron-400 bg-saffron-500/10"
+                      : "border-stone-700 hover:border-stone-500"
+                  }`}
+                >
+                  <span className="text-stone-400 text-[11px] block leading-tight mb-0.5">{item.en}</span>
+                  <span className="text-saffron-300 font-serif font-bold text-base">
+                    ₹{item.amount.toLocaleString("en-IN")}
+                  </span>
+                </button>
+              ))}
+            </div>
+
+            {/* Custom amount */}
+            <div className="relative mb-7">
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-500 text-sm">₹</span>
+              <input
+                type="number"
+                min="1"
+                placeholder="Or enter a custom amount"
+                value={customAmount}
+                onChange={e => { setCustomAmount(e.target.value); setDonItem(null); }}
+                className="w-full pl-8 pr-4 py-3 bg-stone-900 border border-stone-700 focus:outline-none focus:border-saffron-400 text-stone-200 text-sm placeholder-stone-600"
+              />
+            </div>
+
+            {/* Payment method toggle */}
+            <p className="text-stone-400 text-[11px] font-semibold tracking-[0.2em] uppercase mb-3">3. Payment Method</p>
+            <div className="flex items-center gap-3 mb-7">
+              <div className="flex border border-stone-700 overflow-hidden">
+                <button
+                  onClick={() => setUseUpi(false)}
+                  className={`px-5 py-2.5 text-xs font-medium transition-colors ${!useUpi ? "bg-saffron-500 text-white" : "text-stone-400 hover:bg-stone-700"}`}
+                >
+                  Razorpay
+                </button>
+                <button
+                  onClick={() => setUseUpi(true)}
+                  className={`px-5 py-2.5 text-xs font-medium transition-colors ${useUpi ? "bg-saffron-500 text-white" : "text-stone-400 hover:bg-stone-700"}`}
+                >
+                  UPI App
+                </button>
+              </div>
+              <span className="text-stone-600 text-xs">
+                {useUpi ? "Opens your UPI app directly" : "Cards, UPI, Net Banking"}
+              </span>
+            </div>
+
+            {/* Donate button */}
+            <button
+              onClick={handleSevaDonate}
+              className="w-full bg-saffron-500 hover:bg-saffron-600 text-white font-medium py-4 tracking-wide transition-colors text-sm"
+            >
+              Donate Now — Hare Krishna 🙏
+            </button>
+
+            <p className="text-center text-stone-600 text-xs mt-4">
+              For receipt, send payment screenshot to WhatsApp: <strong className="text-stone-400">{BANK.receipt}</strong>
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* ── Bank Details ── */}
       <section className="bg-stone-100 border-t border-stone-200 py-16 px-4">
         <div className="max-w-4xl mx-auto">
@@ -297,12 +459,12 @@ export default function SudamaSeva() {
                   <p className="text-stone-400 text-xs">Founder-Acarya, ISKCON</p>
                 </div>
               </div>
-              <Link
-                to="/donation"
+              <a
+                href="#donate"
                 className="block text-center bg-saffron-500 hover:bg-saffron-600 text-white font-medium py-4 tracking-wide transition-colors duration-200"
               >
-                Donate Online via UPI / Razorpay →
-              </Link>
+                Donate Online via UPI / Razorpay ↑
+              </a>
             </div>
           </div>
         </div>

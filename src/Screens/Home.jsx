@@ -12,6 +12,55 @@ import { usePageMeta } from "../hooks/usePageMeta";
 
 const CHANNEL_ID = "UCJagYE271S8A54O8vRQlOug";
 
+function SudamaSevaSection() {
+  return (
+    <section className="bg-gradient-to-br from-amber-50 via-orange-50 to-amber-50 border-t border-b border-amber-200 py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <p className="text-amber-600 text-xs font-semibold tracking-[0.3em] uppercase mb-3">Devotional Service</p>
+            <h2 className="font-serif text-3xl lg:text-4xl text-stone-900 mb-2">
+              सुदामा <span className="text-saffron-500">सेवा</span>
+            </h2>
+            <p className="text-stone-500 text-sm italic mb-5">Sudama Seva — Offer with a Pure Heart</p>
+            <div className="w-10 h-0.5 bg-saffron-400 mb-6" />
+            <p className="text-stone-600 text-[15px] leading-relaxed mb-4">
+              Like Sudama who brought a handful of flat rice with pure love, you can offer whatever you have from the heart — and receive the boundless grace of Sri Sri Radha Murlidhar.
+            </p>
+            <p className="text-stone-500 text-sm leading-relaxed mb-8">
+              Sponsor deity worship, feed the sadhus, distribute Srila Prabhupada's books, or join as a monthly Nitya Dan member.
+            </p>
+            <Link
+              to="/sudama-seva"
+              className="inline-block bg-saffron-500 hover:bg-saffron-600 text-white text-sm font-medium px-8 py-3.5 tracking-wide transition-colors duration-200"
+            >
+              Explore Sudama Seva →
+            </Link>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            {[
+              { to: "/sudama-seva#vigrah", title: "Vigrah Seva",  subtitle: "विग्रह सेवा",  desc: "Sponsor deity worship & offerings",  color: "from-pink-500 to-purple-700" },
+              { to: "/sudama-seva#sadhu",  title: "Sadhu Seva",   subtitle: "साधु सेवा",    desc: "Feed the saints & devotees",         color: "from-orange-500 to-amber-600" },
+              { to: "/sudama-seva#granth", title: "Granth Dan",   subtitle: "ग्रन्थ दान",   desc: "Distribute Prabhupada's books",      color: "from-blue-500 to-indigo-700" },
+              { to: "/sudama-seva#nitya",  title: "Nitya Dan",    subtitle: "नित्य दान",    desc: "Monthly devotion program",           color: "from-green-500 to-emerald-700" },
+            ].map((seva) => (
+              <Link
+                key={seva.to}
+                to={seva.to}
+                className={`bg-gradient-to-br ${seva.color} p-5 text-white hover:opacity-90 transition-opacity`}
+              >
+                <p className="font-serif text-base font-semibold leading-tight">{seva.title}</p>
+                <p className="text-xs opacity-70 mt-0.5 mb-2">{seva.subtitle}</p>
+                <p className="text-xs opacity-80 leading-snug">{seva.desc}</p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function DonationCTA() {
   const { t } = useTranslation();
   return (
@@ -90,6 +139,7 @@ function Home() {
       <Founder />
       <PhilosophyQuote />
       <Festivals />
+      <SudamaSevaSection />
       <DonationCTA />
       <RecentVideos channelId={CHANNEL_ID} />
     </main>

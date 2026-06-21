@@ -65,14 +65,15 @@ const FESTIVALS = [
 ];
 
 const TYPE_CONFIG = {
-  major:      { label: "Major Festival", color: "bg-amber-100 text-amber-800 border-amber-300", dot: "bg-amber-500", header: "bg-amber-500" },
-  ekadashi:   { label: "Ekadashi",       color: "bg-violet-100 text-violet-800 border-violet-300", dot: "bg-violet-500", header: "bg-violet-500" },
-  prabhupada: { label: "Prabhupada",     color: "bg-blue-100 text-blue-800 border-blue-300", dot: "bg-blue-500", header: "bg-blue-500" },
-  vaishnava:  { label: "Vaishnava Day",  color: "bg-green-100 text-green-800 border-green-300", dot: "bg-green-500", header: "bg-green-500" },
+  major:      { label: "Major Festival", color: "bg-amber-100 text-amber-800 border-amber-200",       dot: "bg-amber-500",   header: "bg-amber-500" },
+  ekadashi:   { label: "Ekadashi",       color: "bg-rose-100 text-rose-700 border-rose-200",          dot: "bg-rose-500",    header: "bg-rose-500" },
+  prabhupada: { label: "Prabhupada",     color: "bg-sky-100 text-sky-800 border-sky-200",             dot: "bg-sky-500",     header: "bg-sky-500" },
+  vaishnava:  { label: "Vaishnava Day",  color: "bg-emerald-100 text-emerald-800 border-emerald-200", dot: "bg-emerald-500", header: "bg-emerald-500" },
 };
 
 const MONTH_NAMES = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 const FILTER_TABS = ["All","Major Festivals","Ekadashi","Prabhupada"];
+const WEEK_DAYS = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 
 function formatDate(dateStr) {
   const d = new Date(dateStr + "T00:00:00");
@@ -85,6 +86,65 @@ function daysUntil(dateStr) {
   return Math.ceil((target - today) / 86400000);
 }
 
+function CalendarGrid({ year, month, items }) {
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const today = new Date(); today.setHours(0,0,0,0);
+
+  const festivalsByDay = {};
+  items.forEach(f => {
+    const d = new Date(f.date + "T00:00:00").getDate();
+    if (!festivalsByDay[d]) festivalsByDay[d] = [];
+    festivalsByDay[d].push(f);
+  });
+
+  const cells = [];
+  for (let i = 0; i < firstDay; i++) cells.push(null);
+  for (let d = 1; d <= daysInMonth; d++) cells.push(d);
+  while (cells.length % 7 !== 0) cells.push(null);
+
+  return (
+    <div className="border border-stone-200 overflow-hidden rounded-sm shadow-sm">
+      <div className="grid grid-cols-7 bg-stone-900">
+        {WEEK_DAYS.map(d => (
+          <div key={d} className="text-center text-[10px] font-semibold text-stone-400 uppercase py-2.5 tracking-wide">{d}</div>
+        ))}
+      </div>
+      <div className="grid grid-cols-7 divide-x divide-y divide-stone-100">
+        {cells.map((day, i) => {
+          if (!day) return <div key={i} className="bg-stone-50 min-h-[72px]" />;
+          const date = new Date(year, month, day);
+          const isPast = date < today;
+          const isToday = date.getTime() === today.getTime();
+          const festivals = festivalsByDay[day] || [];
+          return (
+            <div
+              key={i}
+              className={`min-h-[72px] p-1.5 ${isToday ? "bg-saffron-50" : "bg-white"} ${isPast ? "opacity-55" : ""}`}
+            >
+              <span className={`text-[11px] font-semibold leading-none block mb-1 ${
+                isToday
+                  ? "bg-saffron-500 text-white w-5 h-5 flex items-center justify-center rounded-full text-[10px]"
+                  : isPast ? "text-stone-300" : "text-stone-500"
+              }`}>
+                {day}
+              </span>
+              <div className="flex flex-col gap-0.5">
+                {festivals.map((f, fi) => (
+                  <div key={fi} className="flex items-center gap-1 group" title={f.name}>
+                    <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${TYPE_CONFIG[f.type].dot}`} />
+                    <span className="text-[8px] text-stone-600 leading-tight truncate hidden sm:block">{f.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 export default function FestivalCalendar() {
   usePageMeta({
     title: "Festival Calendar 2025–26",
@@ -92,6 +152,7 @@ export default function FestivalCalendar() {
   });
 
   const [filter, setFilter] = useState("All");
+  const [view, setView] = useState("list");
 
   const today = new Date(); today.setHours(0,0,0,0);
 
@@ -112,7 +173,6 @@ export default function FestivalCalendar() {
     });
   }, [filter]);
 
-  // Group by year → month
   const grouped = useMemo(() => {
     const map = {};
     filtered.forEach(f => {
@@ -126,9 +186,8 @@ export default function FestivalCalendar() {
 
   return (
     <div className="bg-stone-50 min-h-screen">
-      {/* Header */}
       <div className="page-header">
-        <p className="page-header-label">Hare Krishna — 2025 & 2026</p>
+        <p className="page-header-label">Hare Krishna — 2025 &amp; 2026</p>
         <h1 className="page-header-title">Festival Calendar</h1>
       </div>
 
@@ -160,95 +219,150 @@ export default function FestivalCalendar() {
         )}
 
         {/* Legend */}
-        <div className="flex flex-wrap gap-4 mb-6">
+        <div className="flex flex-wrap gap-5 mb-6">
           {Object.entries(TYPE_CONFIG).map(([key, cfg]) => (
-            <div key={key} className="flex items-center gap-2 text-xs text-stone-500">
+            <div key={key} className="flex items-center gap-2 text-xs text-stone-700 font-medium">
               <span className={`w-2.5 h-2.5 rounded-full ${cfg.dot}`} />
               {cfg.label}
             </div>
           ))}
         </div>
 
-        {/* Filter tabs */}
-        <div className="flex flex-wrap gap-2 mb-10">
-          {FILTER_TABS.map(tab => (
+        {/* Filter tabs + View toggle */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10">
+          <div className="flex flex-wrap gap-2">
+            {FILTER_TABS.map(tab => (
+              <button
+                key={tab}
+                onClick={() => setFilter(tab)}
+                className={`text-sm font-medium px-5 py-2 border transition-colors duration-200 ${
+                  filter === tab
+                    ? "bg-saffron-500 border-saffron-500 text-white"
+                    : "border-stone-200 text-stone-600 hover:border-saffron-400 hover:text-saffron-500 bg-white"
+                }`}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
+          <div className="flex border border-stone-200 overflow-hidden shrink-0">
             <button
-              key={tab}
-              onClick={() => setFilter(tab)}
-              className={`text-sm font-medium px-5 py-2 border transition-colors duration-200 ${
-                filter === tab
-                  ? "bg-saffron-500 border-saffron-500 text-white"
-                  : "border-stone-200 text-stone-600 hover:border-saffron-400 hover:text-saffron-500 bg-white"
-              }`}
+              onClick={() => setView("list")}
+              className={`px-5 py-2 text-sm font-medium transition-colors ${view === "list" ? "bg-stone-900 text-white" : "bg-white text-stone-600 hover:bg-stone-50"}`}
             >
-              {tab}
+              ☰ List
             </button>
-          ))}
+            <button
+              onClick={() => setView("calendar")}
+              className={`px-5 py-2 text-sm font-medium transition-colors ${view === "calendar" ? "bg-stone-900 text-white" : "bg-white text-stone-600 hover:bg-stone-50"}`}
+            >
+              ⊞ Calendar
+            </button>
+          </div>
         </div>
 
-        {/* Month groups */}
-        <div className="space-y-10">
-          {grouped.map(({ year, month, items }) => (
-            <div key={`${year}-${month}`}>
-              <div className="flex items-center gap-4 mb-5">
-                <h2 className="font-serif text-2xl text-stone-900">
-                  {MONTH_NAMES[month]} <span className="text-saffron-500">{year}</span>
-                </h2>
-                <div className="flex-1 h-px bg-stone-200" />
-              </div>
+        {/* ── List View ── */}
+        {view === "list" && (
+          <div className="space-y-10">
+            {grouped.map(({ year, month, items }) => (
+              <div key={`${year}-${month}`}>
+                <div className="flex items-center gap-4 mb-5">
+                  <h2 className="font-serif text-2xl text-stone-900">
+                    {MONTH_NAMES[month]} <span className="text-saffron-500">{year}</span>
+                  </h2>
+                  <div className="flex-1 h-px bg-stone-200" />
+                </div>
 
-              <div className="space-y-3">
-                {items.map((f, i) => {
-                  const cfg = TYPE_CONFIG[f.type];
-                  const days = daysUntil(f.date);
-                  const isPast = days < 0;
-                  const isToday = days === 0;
+                <div className="space-y-3">
+                  {items.map((f, i) => {
+                    const cfg = TYPE_CONFIG[f.type];
+                    const days = daysUntil(f.date);
+                    const isPast = days < 0;
+                    const isToday = days === 0;
 
-                  return (
-                    <div
-                      key={i}
-                      className={`flex gap-4 items-start bg-white border border-stone-100 p-4 sm:p-5 transition-opacity ${isPast ? "opacity-50" : ""} ${isToday ? "ring-2 ring-saffron-400" : ""}`}
-                    >
-                      {/* Date block */}
-                      <div className="shrink-0 text-center w-14">
-                        <div className="text-2xl font-serif font-bold text-saffron-500 leading-none">
-                          {new Date(f.date + "T00:00:00").getDate()}
-                        </div>
-                        <div className="text-[10px] text-stone-400 uppercase tracking-wide mt-0.5">
-                          {MONTH_NAMES[month].slice(0,3)}
-                        </div>
-                      </div>
-
-                      {/* Divider */}
-                      <div className={`w-0.5 self-stretch shrink-0 ${cfg.dot}`} />
-
-                      {/* Content */}
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-start justify-between gap-3 flex-wrap">
-                          <div>
-                            <p className={`font-serif text-base leading-snug ${isPast ? "text-stone-400" : "text-stone-900"} ${f.special ? "font-semibold" : ""}`}>
-                              {f.name}
-                              {f.special && <span className="ml-2 text-saffron-500">★</span>}
-                            </p>
-                            {f.desc && (
-                              <p className="text-xs text-stone-500 mt-1 leading-relaxed">{f.desc}</p>
-                            )}
+                    return (
+                      <div
+                        key={i}
+                        className={`flex gap-4 items-start bg-white border border-stone-100 p-4 sm:p-5 transition-opacity ${isPast ? "opacity-60" : ""} ${isToday ? "ring-2 ring-saffron-400" : ""}`}
+                      >
+                        <div className="shrink-0 text-center w-14">
+                          <div className="text-2xl font-serif font-bold text-saffron-500 leading-none">
+                            {new Date(f.date + "T00:00:00").getDate()}
                           </div>
-                          <span className={`text-[10px] font-semibold tracking-widest uppercase px-2 py-0.5 rounded border shrink-0 ${cfg.color}`}>
-                            {isToday ? "Today" : cfg.label}
-                          </span>
+                          <div className="text-[10px] text-stone-400 uppercase tracking-wide mt-0.5">
+                            {MONTH_NAMES[month].slice(0,3)}
+                          </div>
+                        </div>
+
+                        <div className={`w-0.5 self-stretch shrink-0 ${cfg.dot}`} />
+
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-start justify-between gap-3 flex-wrap">
+                            <div>
+                              <p className={`font-serif text-base leading-snug ${isPast ? "text-stone-500" : "text-stone-900"} ${f.special ? "font-semibold" : ""}`}>
+                                {f.name}
+                                {f.special && <span className="ml-2 text-saffron-500">★</span>}
+                              </p>
+                              {f.desc && (
+                                <p className="text-xs text-stone-500 mt-1 leading-relaxed">{f.desc}</p>
+                              )}
+                            </div>
+                            <span className={`text-[10px] font-semibold tracking-widest uppercase px-2 py-0.5 rounded border shrink-0 ${cfg.color}`}>
+                              {isToday ? "Today" : cfg.label}
+                            </span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
 
-        {/* Footer note */}
-        <div className="mt-14 bg-amber-50 border border-amber-200 p-5 text-sm text-amber-800 leading-relaxed">
+        {/* ── Calendar View ── */}
+        {view === "calendar" && (
+          <div className="space-y-12">
+            {grouped.map(({ year, month, items }) => (
+              <div key={`${year}-${month}`}>
+                <div className="flex items-center gap-4 mb-5">
+                  <h2 className="font-serif text-2xl text-stone-900">
+                    {MONTH_NAMES[month]} <span className="text-saffron-500">{year}</span>
+                  </h2>
+                  <div className="flex-1 h-px bg-stone-200" />
+                </div>
+
+                <CalendarGrid year={year} month={month} items={items} />
+
+                {/* Festival list below the grid */}
+                <div className="mt-4 bg-white border border-stone-100 divide-y divide-stone-100">
+                  {items.map((f, i) => {
+                    const cfg = TYPE_CONFIG[f.type];
+                    const days = daysUntil(f.date);
+                    const isPast = days < 0;
+                    return (
+                      <div key={i} className={`flex items-center gap-3 px-4 py-3 ${isPast ? "opacity-60" : ""}`}>
+                        <span className={`w-2 h-2 rounded-full shrink-0 ${cfg.dot}`} />
+                        <span className="text-stone-400 text-xs w-16 shrink-0 font-medium tabular-nums">
+                          {new Date(f.date + "T00:00:00").toLocaleDateString("en-IN", { day: "numeric", month: "short" })}
+                        </span>
+                        <span className={`text-sm flex-1 ${isPast ? "text-stone-500" : "text-stone-800"} ${f.special ? "font-semibold" : ""}`}>
+                          {f.name}{f.special && " ★"}
+                        </span>
+                        <span className={`text-[10px] font-semibold tracking-wider uppercase px-2 py-0.5 rounded border shrink-0 ${cfg.color}`}>
+                          {cfg.label}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div className="mt-14 bg-amber-50 border border-amber-200 p-5 text-sm text-amber-900 leading-relaxed">
           <strong>Note:</strong> Festival dates follow the Vaishnava lunar calendar and may vary slightly by location. Dates listed are based on the IST (India Standard Time) timezone for Bhusawal, Maharashtra. Please confirm with the temple for local celebration timings.
         </div>
       </div>
