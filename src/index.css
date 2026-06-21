@@ -4,11 +4,14 @@
 
 @layer base {
   html {
-    scroll-behavior: smooth;
+    /* scroll-behavior on root causes conflicts on route changes — handled per-element instead */
+    scroll-behavior: auto;
+    overscroll-behavior-y: none;
   }
 
   body {
     @apply font-sans text-stone-800 antialiased bg-white;
+    overscroll-behavior-y: none;
   }
 
   h1, h2, h3, h4, h5, h6 {

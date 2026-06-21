@@ -42,6 +42,12 @@ const Header = () => {
     setIsMobileMenuOpen(false);
   }, [location]);
 
+  // Lock body scroll while mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = isMobileMenuOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [isMobileMenuOpen]);
+
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
@@ -152,7 +158,7 @@ const Header = () => {
 
       {/* Mobile menu */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden bg-white border-t border-stone-100 px-4 py-3">
+        <div className="lg:hidden bg-white border-t border-stone-100 px-4 py-3 overflow-y-auto max-h-[calc(100vh-7rem)]">
           {[navLinks[0], ...aboutLinks, ...navLinks.slice(1)].map((item) => (
             <Link
               key={item.to + item.label}
