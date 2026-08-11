@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:api": "node --env-file=.env scripts/dev-api-server.mjs",
+    "dev:vercel": "vercel dev",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
@@ -17,6 +19,7 @@
     "flowbite": "^2.5.2",
     "i18next": "^26.3.1",
     "i18next-browser-languagedetector": "^8.2.1",
+    "razorpay": "^2.9.8",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-i18next": "^17.0.8",

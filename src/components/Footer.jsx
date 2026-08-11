@@ -22,6 +22,7 @@ function Footer() {
   ];
 
   const engageLinks = [
+    { to: "/janmashtami", label: "Janmashtami" },
     { to: "/iys", label: t("footer.link_iys") },
     { to: "/spiritual-study-center", label: t("footer.link_study") },
     { to: "/nav-mandir-nirman", label: t("footer.link_temple") },

@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import d3 from "../assets/d3.png";
 import d2 from "../assets/d2.png";
 import { usePageMeta } from "../hooks/usePageMeta";
-
-// Replace with your live Razorpay Key ID from razorpay.com
-const RAZORPAY_KEY_ID = "rzp_test_YourKeyHere";
+import { openRazorpayCheckout, RAZORPAY_MAX_AMOUNT } from "../lib/razorpay";
 
 const DONATION_CATEGORIES = [
   {
@@ -36,55 +34,47 @@ const DONATION_CATEGORIES = [
       { name: "Temple Pillar", amount: "10 Lakh", value: 1000000 },
     ],
   },
+  {
+    category: "Square Foot",
+    items: [
+      { name: "1 Square Foot", amount: "3,100",  value: 3100  },
+      { name: "2 Square Foot", amount: "6,200",  value: 6200  },
+      { name: "3 Square Foot", amount: "9,300",  value: 9300  },
+      { name: "4 Square Foot", amount: "12,400", value: 12400 },
+      { name: "5 Square Foot", amount: "15,500", value: 15500 },
+    ],
+  },
+  {
+    category: "Bricks (Per Unit)",
+    items: [
+      { name: "1 Brick", amount: "2,100", value: 2100 },
+      { name: "2 Brick", amount: "4,200", value: 4200 },
+    ],
+  },
 ];
 
-function openRazorpay(amountInRupees, description) {
-  if (!window.Razorpay) {
-    alert("Payment gateway not loaded. Please refresh the page and try again.");
-    return;
-  }
-
-  const options = {
-    key: RAZORPAY_KEY_ID,
-    amount: amountInRupees * 100, // Razorpay expects paise
-    currency: "INR",
-    name: "ISKCON Bhusawal",
+function donate(amountValue, description) {
+  openRazorpayCheckout({
+    amount: amountValue,
     description,
-    image: "/src/assets/iskcon.png",
-    handler(response) {
+    notes: { temple: "Sri Sri Radha Murlidhar Mandir, Bhusawal" },
+    onSuccess: (response) => {
       alert(
         `Hare Krishna! Your donation was received.\nPayment ID: ${response.razorpay_payment_id}\nThank you for supporting the temple.`
       );
     },
-    prefill: {
-      name: "",
-      email: "",
-      contact: "",
+    onFailure: (reason) => {
+      alert(
+        reason
+          ? `Payment failed: ${reason}`
+          : "Payment could not be verified. If any amount was deducted, please contact us with your payment ID."
+      );
     },
-    notes: {
-      temple: "Sri Sri Radha Murlidhar Mandir, Bhusawal",
+    onOrderError: (reason) => {
+      alert(`This amount can't be processed online right now (${reason}). Please use the bank transfer details below, or call us at 9011295877 / 7767037980.`);
+      document.getElementById("bank-details")?.scrollIntoView({ behavior: "smooth", block: "center" });
     },
-    theme: {
-      color: "#C8860A",
-    },
-    modal: {
-      ondismiss() {},
-    },
-  };
-
-  const rzp = new window.Razorpay(options);
-  rzp.open();
-}
-
-function handleUpiFallback(amountValue, description) {
-  const params = new URLSearchParams({
-    pa: "037322010400054@axisbank",
-    pn: "INTERNATIONAL SOCIETY FOR KRISHNA CONSCIOUSNESS",
-    am: amountValue.toString(),
-    tn: description,
-    cu: "INR",
   });
-  window.open(`upi://pay?${params.toString()}`, "_blank");
 }
 
 function Donation() {
@@ -94,15 +84,11 @@ function Donation() {
       "Support the construction of Sri Sri Radha Murlidhar Mandir in Bhusawal. Donate via Razorpay or UPI. 80G tax exemption available.",
   });
   const [customAmount, setCustomAmount] = useState("");
-  const [useUpi, setUseUpi] = useState(false);
+  const customAmountOverLimit = parseFloat(customAmount) > RAZORPAY_MAX_AMOUNT;
 
   const handleDonate = (item) => {
     const desc = `${item.name} — ISKCON Bhusawal Temple Construction`;
-    if (useUpi) {
-      handleUpiFallback(item.value, desc);
-    } else {
-      openRazorpay(item.value, desc);
-    }
+    donate(item.value, desc);
   };
 
   const handleCustomDonate = () => {
@@ -112,11 +98,7 @@ function Donation() {
       return;
     }
     const desc = "Voluntary Donation — ISKCON Bhusawal Temple Construction";
-    if (useUpi) {
-      handleUpiFallback(amount, desc);
-    } else {
-      openRazorpay(amount, desc);
-    }
+    donate(amount, desc);
   };
 
   const handleCopyBankDetails = () => {
@@ -153,29 +135,6 @@ function Donation() {
           </div>
         </div>
 
-        {/* Payment method toggle */}
-        <div className="flex items-center justify-center gap-4 mb-12">
-          <span className="text-sm text-stone-500">Payment via:</span>
-          <div className="flex border border-stone-200 bg-white overflow-hidden">
-            <button
-              onClick={() => setUseUpi(false)}
-              className={`px-5 py-2.5 text-sm font-medium transition-colors ${
-                !useUpi ? "bg-saffron-500 text-white" : "text-stone-600 hover:bg-stone-50"
-              }`}
-            >
-              Razorpay
-            </button>
-            <button
-              onClick={() => setUseUpi(true)}
-              className={`px-5 py-2.5 text-sm font-medium transition-colors ${
-                useUpi ? "bg-saffron-500 text-white" : "text-stone-600 hover:bg-stone-50"
-              }`}
-            >
-              UPI App
-            </button>
-          </div>
-        </div>
-
         {/* Donation tables */}
         <div className="mb-16">
           <p className="section-label text-center mb-3">Donation Options</p>
@@ -204,25 +163,41 @@ function Donation() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-stone-100">
-                    {cat.items.map((item, j) => (
-                      <tr
-                        key={j}
-                        className="hover:bg-saffron-50 transition-colors"
-                      >
-                        <td className="px-6 py-4 text-stone-800">{item.name}</td>
-                        <td className="px-6 py-4 font-semibold text-saffron-600">
-                          &#8377; {item.amount}
-                        </td>
-                        <td className="px-6 py-4 text-right">
-                          <button
-                            onClick={() => handleDonate(item)}
-                            className="bg-saffron-500 hover:bg-saffron-600 text-white text-xs font-medium px-5 py-2.5 tracking-wide transition-colors"
-                          >
-                            Donate
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
+                    {cat.items.map((item, j) => {
+                      const overLimit = item.value > RAZORPAY_MAX_AMOUNT;
+                      return (
+                        <tr
+                          key={j}
+                          className="hover:bg-saffron-50 transition-colors"
+                        >
+                          <td className="px-6 py-4 text-stone-800">{item.name}</td>
+                          <td className="px-6 py-4 font-semibold text-saffron-600">
+                            &#8377; {item.amount}
+                          </td>
+                          <td className="px-6 py-4 text-right">
+                            {overLimit ? (
+                              <div className="inline-flex flex-col items-end gap-1">
+                                <button
+                                  disabled
+                                  title="Above the online payment limit — please use bank transfer"
+                                  className="bg-stone-200 text-stone-400 text-xs font-medium px-5 py-2.5 tracking-wide cursor-not-allowed"
+                                >
+                                  Donate
+                                </button>
+                                <span className="text-[11px] text-stone-400">Bank transfer only</span>
+                              </div>
+                            ) : (
+                              <button
+                                onClick={() => handleDonate(item)}
+                                className="bg-saffron-500 hover:bg-saffron-600 text-white text-xs font-medium px-5 py-2.5 tracking-wide transition-colors"
+                              >
+                                Donate
+                              </button>
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>
@@ -252,15 +227,26 @@ function Donation() {
             </div>
             <button
               onClick={handleCustomDonate}
-              className="bg-saffron-500 hover:bg-saffron-600 text-white text-sm font-medium px-8 py-3.5 tracking-wide transition-colors whitespace-nowrap"
+              disabled={customAmountOverLimit}
+              className={`text-sm font-medium px-8 py-3.5 tracking-wide transition-colors whitespace-nowrap ${
+                customAmountOverLimit
+                  ? "bg-stone-200 text-stone-400 cursor-not-allowed"
+                  : "bg-saffron-500 hover:bg-saffron-600 text-white"
+              }`}
             >
               Donate Now
             </button>
           </div>
+          {customAmountOverLimit && (
+            <p className="text-xs text-stone-500 mt-3">
+              Amounts above &#8377;{RAZORPAY_MAX_AMOUNT.toLocaleString("en-IN")} can&apos;t be processed online yet —
+              please use the bank transfer details below.
+            </p>
+          )}
         </div>
 
         {/* Bank details */}
-        <div className="bg-stone-900 text-stone-300 p-8 lg:p-10 mb-8">
+        <div id="bank-details" className="bg-stone-900 text-stone-300 p-8 lg:p-10 mb-8">
           <h3 className="font-serif text-xl text-white mb-6">Direct Bank Transfer</h3>
           <div className="grid sm:grid-cols-2 gap-8">
             <dl className="space-y-3 text-sm">

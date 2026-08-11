@@ -17,6 +17,7 @@ const FESTIVALS = [
   {
     name: "Janmashtami",
     month: "August",
+    to: "/janmashtami",
     description:
       "The most celebrated festival — the appearance day of Lord Sri Krishna. Fasting, midnight celebration, abhishek ceremony, and grand prasadam feast mark this auspicious occasion.",
   },
@@ -63,22 +64,31 @@ function Festivals() {
 
         {/* Festival grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-stone-200">
-          {FESTIVALS.map((festival, i) => (
-            <div key={i} className="bg-white p-8 flex flex-col group">
-              <div className="flex items-start justify-between mb-5">
-                <h3 className="font-serif text-xl text-stone-900 leading-snug flex-1">
-                  {festival.name}
-                </h3>
-                <span className="ml-4 text-xs font-medium text-saffron-500 bg-saffron-50 border border-saffron-200 px-2.5 py-1 shrink-0">
-                  {festival.month}
-                </span>
-              </div>
-              <p
-                className="text-stone-500 text-sm leading-relaxed flex-1"
-                dangerouslySetInnerHTML={{ __html: festival.description }}
-              />
-            </div>
-          ))}
+          {FESTIVALS.map((festival, i) => {
+            const Card = festival.to ? Link : "div";
+            const cardProps = festival.to ? { to: festival.to } : {};
+            return (
+              <Card key={i} {...cardProps} className="bg-white p-8 flex flex-col group hover:bg-saffron-50/60 transition-colors">
+                <div className="flex items-start justify-between mb-5">
+                  <h3 className="font-serif text-xl text-stone-900 leading-snug flex-1 group-hover:text-saffron-600 transition-colors">
+                    {festival.name}
+                  </h3>
+                  <span className="ml-4 text-xs font-medium text-saffron-500 bg-saffron-50 border border-saffron-200 px-2.5 py-1 shrink-0">
+                    {festival.month}
+                  </span>
+                </div>
+                <p
+                  className="text-stone-500 text-sm leading-relaxed flex-1"
+                  dangerouslySetInnerHTML={{ __html: festival.description }}
+                />
+                {festival.to && (
+                  <span className="text-xs font-medium text-saffron-500 mt-4 inline-flex items-center gap-1.5">
+                    View details &amp; sponsor a seva →
+                  </span>
+                )}
+              </Card>
+            );
+          })}
         </div>
 
         {/* Note */}
