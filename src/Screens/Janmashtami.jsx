@@ -4,6 +4,7 @@ import { openRazorpayCheckout, RAZORPAY_MAX_AMOUNT } from "../lib/razorpay";
 import heroKrishna from "../assets/darshan/8.jpeg";
 import radhaKrishna from "../assets/darshan/3.jpeg";
 import kirtanPhoto from "../assets/iskcon-kirtan.jpg";
+import paymentQr from "../assets/iskcon-payment-qr.jpeg";
 
 // ── Seva data from the ISKCON Bhusawal Janmashtami flyer ────────────────────
 
@@ -330,31 +331,46 @@ function Janmashtami() {
 
           {/* Bank details */}
           <div id="bank-details" className="bg-stone-900 text-stone-300 p-8 lg:p-10">
-            <h3 className="font-serif text-xl text-white mb-6">Direct Bank Transfer (NEFT / IMPS)</h3>
-            <dl className="space-y-3 text-sm mb-6">
-              {[
-                ["Account Name", BANK.name],
-                ["Account Number", BANK.account],
-                ["IFSC Code", BANK.ifsc],
-                ["Branch", BANK.branch],
-              ].map(([label, value]) => (
-                <div key={label} className="flex items-start justify-between gap-4 pb-3 border-b border-stone-800 last:border-0">
-                  <div className="flex gap-4">
-                    <dt className="text-stone-500 w-32 shrink-0">{label}</dt>
-                    <dd className="text-stone-200 font-medium">{value}</dd>
-                  </div>
-                  <button
-                    onClick={() => copyToClipboard(value, label)}
-                    className="shrink-0 text-xs text-saffron-400 hover:text-saffron-300 font-medium transition-colors"
-                  >
-                    {copiedField === label ? "✓ Copied" : "Copy"}
-                  </button>
+            <div className="grid md:grid-cols-5 gap-10">
+              <div className="md:col-span-3">
+                <h3 className="font-serif text-xl text-white mb-6">Direct Bank Transfer (NEFT / IMPS)</h3>
+                <dl className="space-y-3 text-sm mb-6">
+                  {[
+                    ["Account Name", BANK.name],
+                    ["Account Number", BANK.account],
+                    ["IFSC Code", BANK.ifsc],
+                    ["Branch", BANK.branch],
+                  ].map(([label, value]) => (
+                    <div key={label} className="flex items-start justify-between gap-4 pb-3 border-b border-stone-800 last:border-0">
+                      <div className="flex gap-4">
+                        <dt className="text-stone-500 w-32 shrink-0">{label}</dt>
+                        <dd className="text-stone-200 font-medium">{value}</dd>
+                      </div>
+                      <button
+                        onClick={() => copyToClipboard(value, label)}
+                        className="shrink-0 text-xs text-saffron-400 hover:text-saffron-300 font-medium transition-colors"
+                      >
+                        {copiedField === label ? "✓ Copied" : "Copy"}
+                      </button>
+                    </div>
+                  ))}
+                </dl>
+                <div className="bg-saffron-500/10 border border-saffron-500/30 p-4 text-sm text-stone-300">
+                  <strong className="text-saffron-200">For a donation receipt:</strong> send your payment screenshot and address via WhatsApp to{" "}
+                  <strong className="text-white">{BANK.receipt}</strong>. For any queries, call {BANK.receipt} or {BANK.phone2}.
                 </div>
-              ))}
-            </dl>
-            <div className="bg-saffron-500/10 border border-saffron-500/30 p-4 text-sm text-stone-300">
-              <strong className="text-saffron-200">For a donation receipt:</strong> send your payment screenshot and address via WhatsApp to{" "}
-              <strong className="text-white">{BANK.receipt}</strong>. For any queries, call {BANK.receipt} or {BANK.phone2}.
+              </div>
+              <div className="md:col-span-2 flex flex-col items-center justify-start text-center border-t border-stone-800 pt-8 md:border-t-0 md:pt-0 md:border-l md:pl-10 md:border-stone-800">
+                <p className="font-serif text-lg text-white mb-1">Scan This to Pay</p>
+                <p className="text-stone-500 text-xs mb-5">ISKCON Bhusawal &middot; UPI</p>
+                <div className="bg-white p-3 shadow-sm">
+                  <img
+                    src={paymentQr}
+                    alt="UPI QR code for International Society for Krishna Consciousness, ISKCON Bhusawal"
+                    className="w-44 h-auto"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
