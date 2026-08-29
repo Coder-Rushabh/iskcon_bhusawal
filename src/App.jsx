@@ -22,6 +22,7 @@ import ContentMedia from './Screens/ContentMedia';
 import FestivalCalendar from './Screens/FestivalCalendar';
 import SudamaSeva from './Screens/SudamaSeva';
 import Janmashtami from './Screens/Janmashtami';
+import Links from './Screens/Links';
 
 function App() {
     return (
@@ -48,8 +49,9 @@ function App() {
                     <Route path="/festivals" element={<FestivalCalendar />} />
                     <Route path="/sudama-seva" element={<SudamaSeva />} />
                     <Route path="/janmashtami" element={<Janmashtami />} />
+                    <Route path="/links" element={<Links />} />
 
-                    <Route path="*" element={<NotFound />} /> 
+                    <Route path="*" element={<NotFound />} />
                 </Routes>
             </div>
     );
