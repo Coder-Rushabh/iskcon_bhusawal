@@ -12,6 +12,12 @@ const LINKS = [
     iconBg: "bg-[#25D366]",
   },
   {
+    label: "IYS Boys Group",
+    href: "https://chat.whatsapp.com/BXcnvH0VqKdDQFKHu7mkrn",
+    icon: <FaWhatsapp size={20} />,
+    iconBg: "bg-[#25D366]",
+  },
+  {
     label: "Instagram",
     href: "https://www.instagram.com/iskcon_bhusawal/",
     icon: <FaInstagram size={20} />,
