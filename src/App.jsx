@@ -23,6 +23,7 @@ import FestivalCalendar from './Screens/FestivalCalendar';
 import SudamaSeva from './Screens/SudamaSeva';
 import Janmashtami from './Screens/Janmashtami';
 import Links from './Screens/Links';
+import Parivartan from './Screens/Parivartan';
 
 function App() {
     return (
@@ -50,6 +51,7 @@ function App() {
                     <Route path="/sudama-seva" element={<SudamaSeva />} />
                     <Route path="/janmashtami" element={<Janmashtami />} />
                     <Route path="/links" element={<Links />} />
+                    <Route path="/parivartan" element={<Parivartan />} />
 
                     <Route path="*" element={<NotFound />} />
                 </Routes>
