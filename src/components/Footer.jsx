@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
 import logo from "../assets/iskcon.png";
+import aiSegmentLogo from "../assets/ai-segment.png";
 
 const socials = [
   { href: "https://www.facebook.com/Iskconbhusawal.ssrm/", icon: <FaFacebookF size={13} />, label: "Facebook" },
@@ -134,9 +135,12 @@ function Footer() {
             <Link to="/terms-n-conditions" className="hover:text-stone-400 transition-colors">Terms</Link>
           </p>
         </div>
-        <p className="mt-4 text-center text-xs text-stone-500">
-          Designed by <span className="font-semibold text-stone-300">AI Segment</span>
-        </p>
+        <div className="mt-4 flex items-center justify-center gap-2 text-xs text-stone-500">
+          <span>Designed by</span>
+          <span className="inline-flex items-center bg-white rounded px-2 py-0.5">
+            <img src={aiSegmentLogo} alt="AI Segment" className="h-6 w-auto" loading="lazy" />
+          </span>
+        </div>
       </div>
     </footer>
   );
