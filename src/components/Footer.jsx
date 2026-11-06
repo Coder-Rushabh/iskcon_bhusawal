@@ -137,9 +137,15 @@ function Footer() {
         </div>
         <div className="mt-4 flex items-center justify-center gap-2 text-xs text-stone-500">
           <span>Designed by</span>
-          <span className="inline-flex items-center bg-white rounded px-2 py-0.5">
+          <a
+            href="https://www.aisegment.me/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="AI Segment"
+            className="inline-flex items-center bg-white rounded px-2 py-0.5 hover:opacity-90 transition-opacity"
+          >
             <img src={aiSegmentLogo} alt="AI Segment" className="h-6 w-auto" loading="lazy" />
-          </span>
+          </a>
         </div>
       </div>
     </footer>
