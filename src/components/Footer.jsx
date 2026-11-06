@@ -134,6 +134,9 @@ function Footer() {
             <Link to="/terms-n-conditions" className="hover:text-stone-400 transition-colors">Terms</Link>
           </p>
         </div>
+        <p className="mt-4 text-center text-xs text-stone-500">
+          Designed by <span className="font-semibold text-stone-300">AI Segment</span>
+        </p>
       </div>
     </footer>
   );
