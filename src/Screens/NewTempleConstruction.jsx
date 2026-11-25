@@ -9,7 +9,7 @@ const YOUTUBE_VIDEO_ID = "8ZUbkxtZeLk";
 
 const CONTACT = {
   address: "Mohit Nagar, Near Radha Krishna Residency, Ring Road, Bhusawal, Maharashtra 425201",
-  phone: "+91-90112-19587 / +91-77670-43798",
+  phones: ["+91-90112-19587", "+91-77670-43798"],
   email: "infoiskcon.bhusawal@gmail.com",
 };
 
@@ -151,7 +151,7 @@ function NewTempleConstruction() {
             <p className="text-stone-400 text-sm max-w-lg">{CONTACT.address}</p>
           </div>
           <div className="shrink-0 space-y-2 text-sm text-stone-400">
-            <p><a href={`tel:${CONTACT.phone}`} className="hover:text-saffron-300 transition-colors">{CONTACT.phone}</a></p>
+            <p>{CONTACT.phones.map((p, i) => (<span key={p}>{i > 0 && " / "}<a href={`tel:${p.replace(/-/g, "")}`} className="hover:text-saffron-300 transition-colors">{p}</a></span>))}</p>
             <p><a href={`mailto:${CONTACT.email}`} className="hover:text-saffron-300 transition-colors">{CONTACT.email}</a></p>
           </div>
         </div>

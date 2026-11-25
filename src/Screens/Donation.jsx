@@ -71,7 +71,7 @@ function donate(amountValue, description) {
       );
     },
     onOrderError: (reason) => {
-      alert(`This amount can't be processed online right now (${reason}). Please use the bank transfer details below, or call us at 9011295877 / 7767037980.`);
+      alert(`This amount can't be processed online right now (${reason}). Please use the bank transfer details below, or call us at 9011219587 / 77670 43798.`);
       document.getElementById("bank-details")?.scrollIntoView({ behavior: "smooth", block: "center" });
     },
   });
@@ -287,7 +287,7 @@ function Donation() {
         <div className="text-center pt-8 border-t border-stone-200">
           <p className="section-label mb-4">Contact Us</p>
           <p className="text-stone-600 text-sm mb-1">
-            9011295877 &middot; 7767037980
+            9011219587 &middot; 77670 43798
           </p>
           <p className="text-stone-600 text-sm">infoiskcon.bhusawal@gmail.com</p>
         </div>

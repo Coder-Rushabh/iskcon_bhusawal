@@ -107,7 +107,7 @@ function Footer() {
             <ul className="space-y-3 text-sm text-stone-500">
               <li>
                 <span className="block text-stone-400 text-xs mb-0.5 font-medium">{t("footer.phone_label")}</span>
-                9011295877 &middot; 7767037980
+                9011219587 &middot; 77670 43798
               </li>
               <li>
                 <span className="block text-stone-400 text-xs mb-0.5 font-medium">{t("footer.email_label")}</span>

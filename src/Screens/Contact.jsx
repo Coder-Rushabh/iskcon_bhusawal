@@ -4,7 +4,7 @@ import { usePageMeta } from "../hooks/usePageMeta";
 
 const INFO = [
   { label: "Address", value: "Sri Sri Radha Murlidhar Mandir\nNear Roop Darshan Photo Studio,\nRam Mandir Ward, Bhusawal,\nMaharashtra — 425201" },
-  { label: "Phone",   value: "9011219587 · 7767037980" },
+  { label: "Phone",   value: "9011219587 · 77670 43798" },
   { label: "Email",   value: "infoiskcon.bhusawal@gmail.com" },
   { label: "Temple Timings", value: "4:30 AM – 1:00 PM · 4:00 PM – 9:00 PM" },
 ];

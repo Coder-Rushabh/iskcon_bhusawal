@@ -13,7 +13,7 @@ import logo from "../assets/iskcon.png";
 const EVENT_START = new Date("2026-10-24T18:30:00+05:30");
 const EVENT_END = new Date("2026-10-25T20:30:00+05:30");
 const WHATSAPP_NUMBER = "919011219587";
-const PHONES = ["9011219587", "9423029322"];
+const PHONES = ["9011219587", "7767043798"];
 // Google Form hookup ("PARIVARTAN 2026 Registration"). Entry ids come from the form itself.
 // An empty id is skipped, so a field can be left out without breaking the submit.
 const GOOGLE_FORM = {

@@ -15,7 +15,7 @@ import gaur from "../assets/gaur.jpg";
 // Contact Details
 const contactDetails = {
   temple: "ISKCON Bhusawal",
-  phone: "+91-77670-43798",
+  phone: "+91-77670-43798 / +91-90112-19587",
   email: "infoiskcon.bhusawal@gmail.com",
   whatsapp: "+919011219587",
   address: "Near Roop Darshan Photo Studio, Ram Mandir Ward, Bhusawal, Maharashtra 425201"

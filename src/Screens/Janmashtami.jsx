@@ -23,7 +23,7 @@ const BANK = {
   account: "911010002501853",
   ifsc: "UTIB0001040",
   branch: "Bhusawal",
-  receipt: "7676704379",
+  receipt: "7767043798",
   phone2: "9011219587",
 };
 

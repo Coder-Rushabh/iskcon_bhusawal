@@ -212,7 +212,7 @@ const TermsAndConditions = () => {
             <p className="mb-2"><strong>Sri Sri Radha Murlidhar Temple - ISKCON Bhusawal</strong></p>
             <p className="mb-4">Near Roop Darshan Photo Studio, Ram Mandir Ward<br />
             Bhusawal - 425201, Maharashtra, India</p>
-            <p className="mb-2"><strong>Phone:</strong> +91 77670 43798, +91 77458 96220</p>
+            <p className="mb-2"><strong>Phone:</strong> +91 77670 43798, +91 90112 19587</p>
             <p className="mb-2"><strong>Email:</strong> iskcon.bhusawal@gmail.com</p>
             <p><strong>Website:</strong> https://iskcon-bhusawal.netlify.app/</p>
           </div>
